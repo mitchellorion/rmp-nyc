@@ -1,0 +1,30 @@
+.user-location-control {
+  background: #fff;
+  border: 0;
+  border-radius: 8px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.35);
+}
+
+.user-location-button {
+  display: block;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0.55rem 0.75rem;
+  border: 0;
+  border-radius: 8px;
+  background: #fff;
+  color: #14213d;
+  font: 600 0.875rem "Inter", sans-serif;
+  cursor: pointer;
+}
+
+.user-location-button:hover,
+.user-location-button:focus-visible {
+  background: #eef4ff;
+  color: #0b4eb2;
+}
+
+.user-location-button:focus-visible {
+  outline: 3px solid #6ca8ff;
+  outline-offset: 2px;
+}
