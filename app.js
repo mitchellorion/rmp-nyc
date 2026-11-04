@@ -36,7 +36,7 @@ const restaurants = [
   { name: "Happy Cuisine", address: "6712 Bay Parkway", borough: "Brooklyn", city: "Brooklyn, NY", zip: "11204" },
   { name: "Hey Rich Roasted", address: "6005 Fort Hamilton Parkway", borough: "Brooklyn", city: "Brooklyn, NY", zip: "11219" },
   { name: "Hua Yi Jia Restaurant", address: "5616 7th Avenue", borough: "Brooklyn", city: "Brooklyn, NY", zip: "11220" },
-  { name: "IHOP", address: "1019 Surf Avenue", borough: "Brooklyn", city: "Brooklyn, NY", zip: "11224", phone: "718-676-7220", website: "https://restaurants.ihop.com/en-us/ny/brooklyn/breakfast-1019-surf-ave-2132" },
+  { name: "IHOP", address: "1019 Surf Avenue", borough: "Brooklyn", city: "Brooklyn, NY", zip: "11224", phone: "718-676-7220", website: "https://restaurants.ihop.com/en-us/ny/brooklyn/breakfast-10[..." },
   { name: "iRestaurant", address: "5922 8th Avenue", borough: "Brooklyn", city: "Brooklyn, NY", zip: "11220", phone: "718-439-3155", website: "https://www.irestaurantny.com" },
   { name: "Jam It Bistro", address: "367 Columbia Street", borough: "Brooklyn", city: "Brooklyn, NY", zip: "11231", phone: "347-599-0941", website: "https://www.jamitbistrony.com" },
   { name: "Jamaican Flavors", address: "1397 Rockaway Parkway", borough: "Brooklyn", city: "Brooklyn, NY", zip: "11236", website: "https://www.jamaicanflavors.com/" },
@@ -97,7 +97,44 @@ const restaurants = [
   { name: "Sonic Drive In", address: "730 Broadway", borough: "Brooklyn", city: "Brooklyn, NY", zip: "11206" },
   { name: "Tonel To Go", address: "1407 Flatbush Avenue", borough: "Brooklyn", city: "Brooklyn, NY", zip: "11210", phone: "347-240-1166" },
   { name: "Umi Premium Sushi & Seafood Buffet", address: "3839 Nostrand Avenue", borough: "Brooklyn", city: "Brooklyn, NY", zip: "11235" },
-  { name: "Uncle NG's Recipe", address: "5603 8th Avenue", borough: "Brooklyn", city: "Brooklyn, NY", zip: "11220" }
+  { name: "Uncle NG's Recipe", address: "5603 8th Avenue", borough: "Brooklyn", city: "Brooklyn, NY", zip: "11220" },
+  { name: "A Daughter and Two Sons", address: "1807 Archer Street", borough: "Bronx", city: "Bronx, NY", zip: "10460" },
+  { name: "Amazing Chicken & Gyro", address: "3496 Jerome Avenue", borough: "Bronx", city: "Bronx, NY", zip: "10467" },
+  { name: "Bailey Seafood & Kuchifrito", address: "146 West 231st Street", borough: "Bronx", city: "Bronx, NY", zip: "10463", phone: "347-964-6296", website: "https://www.baileykuchifrito.com/" },
+  { name: "Bites On Valentine", address: "239 East 203rd Street", borough: "Bronx", city: "Bronx, NY", zip: "10458", phone: "718-618-0311", website: "https://bitesonvalentine.com/" },
+  { name: "Bobo's Crab Shack", address: "2450 Grand Concourse", borough: "Bronx", city: "Bronx, NY", zip: "10458", website: "https://www.boboscrabshack.com/menu" },
+  { name: "Bobo's Wing and Seafood", address: "25 East Bedford Park Boulevard", borough: "Bronx", city: "Bronx, NY", zip: "10468", website: "https://www.boboscrabshack.com/menu" },
+  { name: "Burger King", address: "3440 Jerome Avenue", borough: "Bronx", city: "Bronx, NY", zip: "10467", phone: "347-275-1292", website: "https://burgerking.com" },
+  { name: "Burger King/Popeyes", address: "60 Metropolitan Oval", borough: "Bronx", city: "Bronx, NY", zip: "10462", phone: "718-969-7025", website: "https://burgerking.com" },
+  { name: "Caribe Restaurant", address: "1762 Crosby Avenue", borough: "Bronx", city: "Bronx, NY", zip: "10461", phone: "718-822-5704" },
+  { name: "Caridad Retaurant Express", address: "18 East Gun Hill Road", borough: "Bronx", city: "Bronx, NY", zip: "10467", phone: "718-324-5300" },
+  { name: "Caridad Seafood Restaurant", address: "410 East Tremont Street", borough: "Bronx", city: "Bronx, NY", zip: "10457" },
+  { name: "Churrasco Del Valle Restaurant", address: "255 East Burnside Avenue", borough: "Bronx", city: "Bronx, NY", zip: "10457", phone: "917-473-6880" },
+  { name: "Dallas BBQ", address: "2160 Bartow Avenue", borough: "Bronx", city: "Bronx, NY", zip: "10475" },
+  { name: "Dunkin Donuts", address: "4 East Fordham Road", borough: "Bronx", city: "Bronx, NY", zip: "10468" },
+  { name: "Dunkin Donuts", address: "2370 Grand Concourse Road", borough: "Bronx", city: "Bronx, NY", zip: "10458" },
+  { name: "Dunkin Donuts", address: "4722 Third Avenue", borough: "Bronx", city: "Bronx, NY", zip: "10458" },
+  { name: "El Valle Restaurant", address: "3535 Jerome Avenue", borough: "Bronx", city: "Bronx, NY", zip: "10467", phone: "347-947-9344" },
+  { name: "Flamez Cuisine", address: "3728 Bronxwood Avenue", borough: "Bronx", city: "Bronx, NY", zip: "10469" },
+  { name: "Jen's French Toast", address: "607 E 169th Street", borough: "Bronx", city: "Bronx, NY", zip: "10456", phone: "718-617-1212", website: "https://www.jensfrenchtoast.com/" },
+  { name: "Leche Y Miel Restaurant", address: "5761 Broadway", borough: "Bronx", city: "Bronx, NY", zip: "10463", phone: "718-708-5787", website: "https://www.lecheymielrestaurant.com/" },
+  { name: "Lechonera Don Pancholo", address: "2037 Jerome Avenue", borough: "Bronx", city: "Bronx, NY", zip: "10453", phone: "718-583-2979" },
+  { name: "Lins Home Chinese", address: "2461 University Avenue", borough: "Bronx", city: "Bronx, NY", zip: "10468", phone: "718-364-2504" },
+  { name: "Los Amigos Restaurant", address: "674 East 180th Street", borough: "Bronx", city: "Bronx, NY", zip: "10457", phone: "718-220-3551", website: "https://losamigosny.com/" },
+  { name: "Love & Soul Food", address: "4 East Gun Hill Road", borough: "Bronx", city: "Bronx, NY", zip: "10467", phone: "347-202-4900" },
+  { name: "Luna Café", address: "726 Courtlandt Avenue", borough: "Bronx", city: "Bronx, NY", zip: "10451", phone: "855-983-8770", website: "https://lunacafeny.com" },
+  { name: "Numero Uno Sabor Latino Restaurant", address: "4120 White Plains Road", borough: "Bronx", city: "Bronx, NY", zip: "10466", website: "https://www.1saborlatino.com/" },
+  { name: "Pa' Comer", address: "104 E. 165th Street", borough: "Bronx", city: "Bronx, NY", zip: "10452", phone: "718-293-3800" },
+  { name: "Pizza Italia", address: "842 East 180th Street", borough: "Bronx", city: "Bronx, NY", zip: "10460" },
+  { name: "Popeye's", address: "815 Hutchinson Parkway", borough: "Bronx", city: "Bronx, NY", zip: "10465" },
+  { name: "Popeye's", address: "631 E Tremont Avenue", borough: "Bronx", city: "Bronx, NY", zip: "10457" },
+  { name: "Popeyes", address: "2751 Boston Road", borough: "Bronx", city: "Bronx, NY", zip: "10469", phone: "718-994-2606", website: "https://popeyes.com" },
+  { name: "Popeyes", address: "1905 Story Avenue", borough: "Bronx", city: "Bronx, NY", zip: "10473", phone: "718-239-0999", website: "https://popeyes.com" },
+  { name: "Popeyes", address: "1600 Bruckner Boulevard", borough: "Bronx", city: "Bronx, NY", zip: "10473", phone: "718-708-4109", website: "https://popeyes.com" },
+  { name: "Popeyes", address: "2176-A White Plains Road", borough: "Bronx", city: "Bronx, NY", zip: "10462", phone: "347-851-3001", website: "https://popeyes.com" },
+  { name: "Qdoba Mexican Eats", address: "1 West Fordham Road", borough: "Bronx", city: "Bronx, NY", zip: "10468" },
+  { name: "Rocbody Fitness Café", address: "2960 Middletown Road", borough: "Bronx", city: "Bronx, NY", zip: "10461", phone: "718-822-2500", website: "https://www.rocbodyfitnesscafe.com" },
+  { name: "Sante Yallah Keur Aisha Restaurant", address: "1460 Boston Road", borough: "Bronx", city: "Bronx, NY", zip: "10460", phone: "718-450-8606" }
 ];
 
 const map = L.map("map").setView([40.6782, -73.9442], 11);
@@ -197,7 +234,7 @@ function renderRestaurantList(items) {
   listEl.innerHTML = "";
 
   if (!items.length) {
-    listEl.innerHTML = '<p class="empty-state">No Brooklyn restaurants match your search.</p>';
+    listEl.innerHTML = '<p class="empty-state">No restaurants match your search.</p>';
     countEl.textContent = "0 restaurants";
     return;
   }
@@ -241,12 +278,13 @@ searchInput.addEventListener("input", refreshList);
 boroughSelect.addEventListener("change", refreshList);
 resetButton.addEventListener("click", () => {
   searchInput.value = "";
+  boroughSelect.value = "All";
   refreshList();
   map.setView([40.6782, -73.9442], 11);
 });
 
 async function initializeMap() {
-  statusBar.textContent = "Geocoding addresses for Brooklyn restaurants…";
+  statusBar.textContent = "Geocoding addresses for restaurant locations…";
 
   for (const restaurant of restaurants) {
     const coordinates = await geocodeRestaurant(restaurant);
@@ -260,7 +298,7 @@ async function initializeMap() {
     return;
   }
 
-  statusBar.textContent = `Loaded ${activeRestaurants.length} Brooklyn restaurant locations.`;
+  statusBar.textContent = `Loaded ${activeRestaurants.length} restaurant locations.`;
   refreshList();
 }
 

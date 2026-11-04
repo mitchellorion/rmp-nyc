@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>RMP NYC Brooklyn Map</title>
+    <title>RMP NYC Map</title>
     <meta
       name="description"
-      content="Interactive map of participating Brooklyn restaurants for the Ready Meal Program."
+      content="Interactive map of participating Brooklyn and Bronx restaurants for the Restaurant Meals Program."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -29,7 +29,7 @@
         <div class="brand-mark">RMP</div>
         <div>
           <p class="eyebrow">Ready Meal Program</p>
-          <h1>Brooklyn Restaurant Map</h1>
+          <h1>NYC Restaurant Map</h1>
         </div>
       </div>
       <div class="header-actions">
@@ -45,7 +45,9 @@
         <label class="select-wrap" for="borough-select">
           <span>Borough</span>
           <select id="borough-select" aria-label="Filter borough">
-            <option value="Brooklyn" selected>Brooklyn</option>
+            <option value="All" selected>All</option>
+            <option value="Brooklyn">Brooklyn</option>
+            <option value="Bronx">Bronx</option>
           </select>
         </label>
       </div>
@@ -64,8 +66,8 @@
       </aside>
 
       <section class="map-panel">
-        <div id="status-bar" class="status-bar">Loading Brooklyn restaurant locations…</div>
-        <div id="map" aria-label="Interactive map of Brooklyn restaurants"></div>
+        <div id="status-bar" class="status-bar">Loading restaurant locations…</div>
+        <div id="map" aria-label="Interactive map of participating restaurants"></div>
       </section>
     </main>
 
