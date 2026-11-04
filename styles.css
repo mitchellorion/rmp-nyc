@@ -1,0 +1,266 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #f4f7f9;
+  --panel: #ffffff;
+  --panel-alt: #eef4ff;
+  --primary: #0d6efd;
+  --primary-dark: #0b4eb2;
+  --text: #14213d;
+  --muted: #4a5a73;
+  --soft-border: #dfe9f3;
+  --shadow: 0 12px 32px rgba(17, 24, 39, 0.08);
+}
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Inter", sans-serif;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+button, input, select {
+  font: inherit;
+}
+
+.site-header {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem 1rem;
+  background: linear-gradient(180deg, #ffffff, #f8fbff);
+  border-bottom: 1px solid var(--soft-border);
+}
+
+.brand-block {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.brand-mark {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 15px;
+  background: linear-gradient(135deg, var(--primary), #6ca8ff);
+  color: white;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  box-shadow: var(--shadow);
+}
+
+.eyebrow {
+  margin: 0 0 0.2rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--primary-dark);
+}
+
+.eyebrow.light {
+  color: rgba(255,255,255,0.82);
+}
+
+.site-header h1 {
+  margin: 0;
+  font-size: clamp(1.7rem, 2vw, 2.2rem);
+  letter-spacing: -0.04em;
+}
+
+.header-actions {
+  display: flex;
+  align-items: end;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.search-wrap, .select-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  min-width: 190px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.search-wrap input,
+.select-wrap select {
+  border: 1px solid var(--soft-border);
+  border-radius: 12px;
+  background: white;
+  min-height: 42px;
+  padding: 0.7rem 0.8rem;
+  color: var(--text);
+}
+
+.page-shell {
+  display: grid;
+  grid-template-columns: minmax(300px, 420px) minmax(0, 1fr);
+  min-height: calc(100vh - 110px);
+}
+
+.restaurant-panel {
+  background: linear-gradient(180deg, #0d1b3d, #14213d);
+  color: white;
+  padding: 1.25rem 1rem 1rem;
+  border-right: 1px solid rgba(255,255,255,0.08);
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.panel-header h2 {
+  margin: 0;
+  font-size: clamp(1.2rem, 1.5vw, 1.7rem);
+}
+
+.ghost-button {
+  appearance: none;
+  border: 1px solid rgba(255,255,255,0.22);
+  background: rgba(255,255,255,0.06);
+  color: white;
+  border-radius: 10px;
+  padding: 0.55rem 0.7rem;
+  cursor: pointer;
+}
+
+.restaurant-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  max-height: calc(100vh - 220px);
+  overflow-y: auto;
+  padding-right: 0.35rem;
+}
+
+.restaurant-item {
+  width: 100%;
+  text-align: left;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 14px;
+  padding: 0.85rem 0.9rem;
+  color: white;
+  cursor: pointer;
+  transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+}
+
+.restaurant-item:hover,
+.restaurant-item:focus-visible {
+  background: rgba(255,255,255,0.1);
+  border-color: rgba(255,255,255,0.18);
+  transform: translateY(-1px);
+}
+
+.restaurant-item strong {
+  display: block;
+  font-size: 0.97rem;
+  margin-bottom: 0.35rem;
+}
+
+.restaurant-item span,
+.restaurant-item small {
+  display: block;
+  color: rgba(255,255,255,0.72);
+  line-height: 1.5;
+}
+
+.map-panel {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.status-bar {
+  display: flex;
+  align-items: center;
+  padding: 0.8rem 1rem;
+  background: #ebf4ff;
+  border-bottom: 1px solid var(--soft-border);
+  color: var(--text);
+  font-weight: 600;
+}
+
+#map {
+  flex: 1;
+  min-height: 500px;
+  width: 100%;
+}
+
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+  border-radius: 12px;
+}
+
+.leaflet-popup-content {
+  margin: 12px 14px;
+  font-family: "Inter", sans-serif;
+  color: var(--text);
+}
+
+.popup-name {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.popup-meta {
+  display: block;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.popup-link {
+  display: inline-block;
+  margin-top: 0.5rem;
+  color: var(--primary-dark);
+  font-weight: 600;
+}
+
+@media (max-width: 980px) {
+  .site-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .header-actions {
+    width: 100%;
+  }
+
+  .search-wrap,
+  .select-wrap {
+    flex: 1 1 220px;
+  }
+
+  .page-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .restaurant-panel {
+    border-right: none;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .restaurant-list {
+    max-height: 320px;
+  }
+}
