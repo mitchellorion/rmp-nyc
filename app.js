@@ -155,7 +155,9 @@ const map = new maplibregl.Map({
   container: "map",
   style: `https://maps.geo.${encodeURIComponent(
     config.region
-  )}.amazonaws.com/v2/styles/Standard/descriptor?key=${encodeURIComponent(config.apiKey)}`,
+  )}.amazonaws.com/v2/styles/Standard/descriptor?key=${encodeURIComponent(
+    config.apiKey
+  )}&color-scheme=Dark`,
   center: NYC_CENTER,
   zoom: 11,
 });
