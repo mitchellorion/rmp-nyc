@@ -332,6 +332,27 @@ resetButton.addEventListener("click", () => {
   });
 });
 
+async function geocodeWithConcurrency(items, concurrency) {
+  const queue = items.map((item, index) => ({ index, item }));
+  let completed = 0;
+
+  async function worker() {
+    while (queue.length) {
+      const { item } = queue.shift();
+      const coordinates = await geocodeRestaurant(item);
+      completed += 1;
+
+      if (coordinates) {
+        addMarker(item, coordinates);
+      }
+
+      statusBar.textContent = `Geocoding addresses for restaurant locations (${completed}/${items.length})…`;
+    }
+  }
+
+  await Promise.all(Array.from({ length: concurrency }, worker));
+}
+
 async function initializeMap() {
   statusBar.textContent = "Geocoding addresses for restaurant locations…";
 
@@ -345,13 +366,7 @@ async function initializeMap() {
     map.once("load", resolve);
   });
 
-  for (const restaurant of restaurants) {
-    const coordinates = await geocodeRestaurant(restaurant);
-    if (coordinates) {
-      const marker = addMarker(restaurant, coordinates);
-      restaurantMarkers.push(marker);
-    }
-  }
+  await geocodeWithConcurrency(restaurants, 5);
 
   if (!activeRestaurants.length) {
     statusBar.textContent = "No locations could be mapped. Please check the list and try again.";
