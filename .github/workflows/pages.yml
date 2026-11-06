@@ -1,0 +1,56 @@
+name: Deploy GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Generate runtime location configuration
+        env:
+          LOCATION_API_KEY: ${{ secrets.LOCATION_API_KEY }}
+          AWS_LOCATION_REGION: us-east-2
+        run: |
+          node <<'NODE'
+          const fs = require('node:fs');
+          const apiKey = process.env.LOCATION_API_KEY;
+          if (!apiKey) {
+            throw new Error('Add the location key as the repository Actions secret LOCATION_API_KEY.');
+          }
+          const region = process.env.AWS_LOCATION_REGION;
+          fs.writeFileSync(
+            'location-config.js',
+            `window.LOCATION_CONFIG = ${JSON.stringify({ apiKey, region })};\n`,
+            { mode: 0o600 }
+          );
+          NODE
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
