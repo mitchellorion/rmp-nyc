@@ -37,8 +37,6 @@
       .addTo(map);
     userMarker.togglePopup();
 
-    userAccuracyCircle = new maplibregl.CircleLayer ? null : null; // placeholder; accuracy ring not critical
-
     map.flyTo({
       center: point,
       zoom: Math.max(map.getZoom(), 15),
