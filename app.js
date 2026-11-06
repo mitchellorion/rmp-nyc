@@ -137,22 +137,40 @@ const restaurants = [
   { name: "Sante Yallah Keur Aisha Restaurant", address: "1460 Boston Road", borough: "Bronx", city: "Bronx, NY", zip: "10460", phone: "718-450-8606" }
 ];
 
-const map = L.map("map").setView([40.6782, -73.9442], 11);
+const NYC_CENTER = [-73.9442, 40.6782];
+const statusBar = document.getElementById("status-bar");
 
-L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-  maxZoom: 19,
-  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-}).addTo(map);
+const config = window.LOCATION_CONFIG;
+if (!config || !config.apiKey || !config.region) {
+  const message =
+    "LOCATION_CONFIG is missing. For local development copy location-config.js.example to location-config.js. " +
+    "For GitHub Pages deployments, set the LOCATION_API_KEY repository secret.";
+  statusBar.textContent = message;
+  throw new Error(message);
+}
 
-const markerLayer = L.layerGroup().addTo(map);
+statusBar.textContent = "Loading map style…";
+
+const map = new maplibregl.Map({
+  container: "map",
+  style: `https://maps.geo.${encodeURIComponent(
+    config.region
+  )}.amazonaws.com/v2/styles/Standard/descriptor?key=${encodeURIComponent(config.apiKey)}`,
+  center: NYC_CENTER,
+  zoom: 11,
+});
+
+map.dragRotate.disable();
+map.touchZoomRotate.disableRotation();
+
 const searchInput = document.getElementById("restaurant-search");
 const countEl = document.getElementById("restaurant-count");
 const listEl = document.getElementById("restaurant-list");
 const resetButton = document.getElementById("reset-button");
-const statusBar = document.getElementById("status-bar");
 const boroughSelect = document.getElementById("borough-select");
 
 const activeRestaurants = [];
+let restaurantMarkers = [];
 
 function formatAddress(restaurant) {
   return `${restaurant.address}, ${restaurant.city || "Brooklyn, NY"}`;
@@ -174,48 +192,68 @@ function popupContent(restaurant) {
   `;
 }
 
-function addMarker(restaurant, coordinates) {
-  const restaurantWithPoint = { ...restaurant, point: coordinates };
-  activeRestaurants.push(restaurantWithPoint);
-
-  const marker = L.marker([coordinates.lat, coordinates.lon]).addTo(markerLayer);
-  marker.bindPopup(popupContent(restaurant));
-  marker.bindTooltip(restaurant.name, { direction: "top", opacity: 0.9 });
-  marker.restaurant = restaurantWithPoint;
-
-  return restaurantWithPoint;
-}
-
 async function geocodeRestaurant(restaurant) {
-  const query = encodeURIComponent(formatAddress(restaurant));
-  const url = `https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&q=${query}`;
+  const query = formatAddress(restaurant);
+  const url = `https://places.geo.${encodeURIComponent(
+    config.region
+  )}.amazonaws.com/v2/geocode?key=${encodeURIComponent(config.apiKey)}`;
 
   try {
     const response = await fetch(url, {
+      method: "POST",
       headers: {
-        Accept: "application/json",
+        "Content-Type": "application/json",
       },
+      body: JSON.stringify({
+        QueryText: query,
+        MaxResults: 1,
+        BiasPosition: NYC_CENTER,
+      }),
     });
 
     if (!response.ok) {
-      throw new Error(`Geocoding failed for ${restaurant.name}`);
+      throw new Error(`Geocoding failed for ${restaurant.name}: ${response.status}`);
     }
 
     const data = await response.json();
+    const item = data && data.ResultItems && data.ResultItems[0];
 
-    if (!data || !data.length) {
+    if (!item || !Array.isArray(item.Position) || item.Position.length < 2) {
       return null;
     }
 
+    const [lon, lat] = item.Position;
     return {
-      lat: Number(data[0].lat),
-      lon: Number(data[0].lon),
-      display_name: data[0].display_name,
+      lat: Number(lat),
+      lon: Number(lon),
+      display_name: (item.Address && item.Address.Label) || item.Title || "",
     };
   } catch (error) {
     console.error(error);
     return null;
   }
+}
+
+function createMarkerElement() {
+  const el = document.createElement("div");
+  el.className = "restaurant-marker";
+  el.setAttribute("role", "button");
+  el.setAttribute("aria-label", "Restaurant location");
+  return el;
+}
+
+function addMarker(restaurant, coordinates) {
+  const restaurantWithPoint = { ...restaurant, point: coordinates };
+  activeRestaurants.push(restaurantWithPoint);
+
+  const marker = new maplibregl.Marker({ element: createMarkerElement() })
+    .setLngLat([coordinates.lon, coordinates.lat])
+    .setPopup(new maplibregl.Popup({ offset: 20 }).setHTML(popupContent(restaurant)))
+    .addTo(map);
+
+  marker.restaurant = restaurantWithPoint;
+
+  return marker;
 }
 
 function getFilteredRestaurants() {
@@ -253,15 +291,22 @@ function renderRestaurantList(items) {
 
     item.addEventListener("click", () => {
       if (restaurant.point) {
-        map.flyTo([restaurant.point.lat, restaurant.point.lon], 15, { duration: 1.3 });
+        map.flyTo({
+          center: [restaurant.point.lon, restaurant.point.lat],
+          zoom: 15,
+          duration: 1300,
+        });
       }
 
-      const marker = markerLayer
-        .getLayers()
-        .find((layer) => layer.restaurant && layer.restaurant.name === restaurant.name && layer.restaurant.address === restaurant.address);
+      const marker = restaurantMarkers.find(
+        (layer) =>
+          layer.restaurant &&
+          layer.restaurant.name === restaurant.name &&
+          layer.restaurant.address === restaurant.address
+      );
 
       if (marker) {
-        marker.openPopup();
+        marker.togglePopup();
       }
     });
 
@@ -280,16 +325,31 @@ resetButton.addEventListener("click", () => {
   searchInput.value = "";
   boroughSelect.value = "All";
   refreshList();
-  map.setView([40.6782, -73.9442], 11);
+  map.flyTo({
+    center: NYC_CENTER,
+    zoom: 11,
+    duration: 1300,
+  });
 });
 
 async function initializeMap() {
   statusBar.textContent = "Geocoding addresses for restaurant locations…";
 
+  restaurantMarkers = [];
+
+  await new Promise((resolve) => {
+    if (map.isStyleLoaded()) {
+      resolve();
+      return;
+    }
+    map.once("load", resolve);
+  });
+
   for (const restaurant of restaurants) {
     const coordinates = await geocodeRestaurant(restaurant);
     if (coordinates) {
-      addMarker(restaurant, coordinates);
+      const marker = addMarker(restaurant, coordinates);
+      restaurantMarkers.push(marker);
     }
   }
 

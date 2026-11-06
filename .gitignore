@@ -1,0 +1,7 @@
+# Generated runtime config (created in CI from GitHub secrets)
+location-config.js
+
+# Local server artifacts
+__pycache__/
+*.pyc
+.DS_Store
