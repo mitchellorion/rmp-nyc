@@ -8,6 +8,8 @@ This repository contains a lightweight static website for exploring restaurants 
 - Search by restaurant or address
 - Borough filtering for Brooklyn, the Bronx, Manhattan, Queens, and Staten Island
 - Clickable list panel for restaurant locations
+- Viewport-driven rendering: only restaurants visible on the map are shown as markers and in the list
+- On load, the map zooms to the visitor's location (falls back to a city-wide view when permission is denied)
 - Responsive layout for desktop and mobile
 
 ## Run locally

@@ -165,6 +165,16 @@ const map = new maplibregl.Map({
 map.dragRotate.disable();
 map.touchZoomRotate.disableRotation();
 
+// If the visitor pans or zooms before their location resolves, do not yank
+// the map away from them when the initial fix arrives.
+let userInteractedWithMap = false;
+map.on("dragstart", () => {
+  userInteractedWithMap = true;
+});
+map.on("wheel", () => {
+  userInteractedWithMap = true;
+});
+
 // The AWS Standard style was authored for engines that report multipolygon
 // features as "Polygon". MapLibre v5 reports them as "MultiPolygon", so style
 // filters comparing geometry-type silently drop those features. This hid
@@ -351,29 +361,110 @@ function createMarkerElement() {
   return el;
 }
 
+function markerIsInViewport(coordinates) {
+  return map.getBounds().contains([coordinates.lon, coordinates.lat]);
+}
+
 function addMarker(restaurant, coordinates) {
   const restaurantWithPoint = { ...restaurant, point: coordinates };
   activeRestaurants.push(restaurantWithPoint);
 
   const marker = new maplibregl.Marker({ element: createMarkerElement() })
     .setLngLat([coordinates.lon, coordinates.lat])
-    .setPopup(new maplibregl.Popup({ offset: 20 }).setHTML(popupContent(restaurant)))
-    .addTo(map);
+    .setPopup(new maplibregl.Popup({ offset: 20 }).setHTML(popupContent(restaurant)));
 
   marker.restaurant = restaurantWithPoint;
+  restaurantMarkers.push(marker);
+
+  // Only render markers that are inside the current map viewport.
+  if (markerIsInViewport(coordinates)) {
+    marker.addTo(map);
+    marker._isOnMap = true;
+  }
 
   return marker;
+}
+
+// Add markers entering the viewport and remove markers leaving it.
+function refreshMarkers() {
+  for (const marker of restaurantMarkers) {
+    const inView = markerIsInViewport(marker.restaurant.point);
+    if (inView && !marker._isOnMap) {
+      marker.addTo(map);
+      marker._isOnMap = true;
+    } else if (!inView && marker._isOnMap) {
+      marker.remove();
+      marker._isOnMap = false;
+    }
+  }
+}
+
+let userMarker = null;
+
+function showUserLocation(position, options = {}) {
+  const { longitude, latitude } = position.coords;
+  const point = [longitude, latitude];
+
+  if (userMarker) {
+    userMarker.remove();
+  }
+
+  userMarker = new maplibregl.Marker({ color: "#1d4ed8" })
+    .setLngLat(point)
+    .setPopup(new maplibregl.Popup({ offset: 25 }).setText("You are here"))
+    .addTo(map);
+
+  if (options.showPopup) {
+    userMarker.togglePopup();
+  }
+
+  if (options.fly) {
+    map.flyTo({
+      center: point,
+      zoom: Math.max(map.getZoom(), options.zoom ?? 15),
+      duration: 1200,
+    });
+  }
+}
+
+// On load, center the map on the visitor's location. Never blocks startup:
+// if permission is denied or slow, the map stays on the city-wide view.
+function tryInitialUserLocation() {
+  if (!navigator.geolocation) {
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(
+    (position) => {
+      showUserLocation(position);
+      if (!userInteractedWithMap) {
+        map.flyTo({
+          center: [position.coords.longitude, position.coords.latitude],
+          zoom: 14,
+          duration: 1600,
+        });
+      }
+    },
+    () => {},
+    { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 }
+  );
 }
 
 function getFilteredRestaurants() {
   const borough = boroughSelect.value;
   const searchValue = searchInput.value.trim().toLowerCase();
+  const bounds = map.getBounds();
 
   return activeRestaurants.filter((restaurant) => {
+    if (!restaurant.point) {
+      return false;
+    }
+    // Only restaurants currently visible on the map are listed.
+    const inView = bounds.contains([restaurant.point.lon, restaurant.point.lat]);
     const matchesBorough = restaurant.borough === borough || borough === "All";
     const text = `${restaurant.name} ${restaurant.address} ${restaurant.city}`.toLowerCase();
     const matchesSearch = !searchValue || text.includes(searchValue);
-    return matchesBorough && matchesSearch;
+    return inView && matchesBorough && matchesSearch;
   });
 }
 
@@ -381,7 +472,10 @@ function renderRestaurantList(items) {
   listEl.innerHTML = "";
 
   if (!items.length) {
-    listEl.innerHTML = '<p class="empty-state">No restaurants match your search.</p>';
+    const hasActiveFilter = Boolean(searchInput.value.trim()) || boroughSelect.value !== "All";
+    listEl.innerHTML = hasActiveFilter
+      ? '<p class="empty-state">No restaurants match your search.</p>'
+      : '<p class="empty-state">No participating restaurants in this area.<br />Pan the map to find more.</p>';
     countEl.textContent = "0 restaurants";
     return;
   }
@@ -398,23 +492,15 @@ function renderRestaurantList(items) {
       <small>${restaurant.city || "Brooklyn, NY"}</small>
     `;
 
+    // Clicking a list item only toggles its popup; the map never moves.
     item.addEventListener("click", () => {
-      if (restaurant.point) {
-        map.flyTo({
-          center: [restaurant.point.lon, restaurant.point.lat],
-          zoom: 15,
-          duration: 1300,
-        });
-      }
-
       const marker = restaurantMarkers.find(
-        (layer) =>
-          layer.restaurant &&
-          layer.restaurant.name === restaurant.name &&
-          layer.restaurant.address === restaurant.address
+        (candidate) =>
+          candidate.restaurant.name === restaurant.name &&
+          candidate.restaurant.address === restaurant.address
       );
 
-      if (marker) {
+      if (marker && marker._isOnMap) {
         marker.togglePopup();
       }
     });
@@ -430,6 +516,14 @@ function refreshList() {
 
 searchInput.addEventListener("input", refreshList);
 boroughSelect.addEventListener("change", refreshList);
+
+// Pan or zoom the map and the list follows: only restaurants inside the
+// current viewport are rendered as markers and shown in the panel.
+map.on("moveend", () => {
+  refreshMarkers();
+  refreshList();
+});
+
 resetButton.addEventListener("click", () => {
   searchInput.value = "";
   boroughSelect.value = "All";
@@ -475,6 +569,10 @@ async function initializeMap() {
     map.once("load", resolve);
   });
 
+  // Ask for the visitor's location in the background; the map flies in
+  // once the fix arrives and permission is granted.
+  tryInitialUserLocation();
+
   await geocodeWithConcurrency(restaurants, 5);
 
   if (!activeRestaurants.length) {
@@ -482,6 +580,7 @@ async function initializeMap() {
     return;
   }
 
+  refreshMarkers();
   statusBar.textContent = `Loaded ${activeRestaurants.length} restaurant locations.`;
   refreshList();
 }

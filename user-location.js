@@ -26,12 +26,20 @@
   }
 
   function onSuccess(position) {
-    const { latitude, longitude, accuracy } = position.coords;
+    // Delegate to the shared implementation in app.js so the initial
+    // load-time fix and this button manage the same marker.
+    if (typeof showUserLocation === "function") {
+      showUserLocation(position, { fly: true, zoom: 15, showPopup: true });
+      setStatus("Your location is shown on the map. Location is only used in this browser session.");
+      return;
+    }
+
+    const { latitude, longitude } = position.coords;
     const point = [longitude, latitude];
 
     clearUserLocation();
 
-    userMarker = new maplibregl.Marker({ color: "#0d6efd" })
+    userMarker = new maplibregl.Marker({ color: "#1d4ed8" })
       .setLngLat(point)
       .setPopup(new maplibregl.Popup({ offset: 25 }).setText("You are here"))
       .addTo(map);
