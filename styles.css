@@ -187,9 +187,42 @@ button, input, select {
   color: var(--faint);
 }
 
-.ad-leaderboard {
+/* Live creative slot: two banner frames crossfading in place. Sized to
+   the creatives' 4:1 aspect ratio (1188x297). */
+.ad-creative {
+  position: relative;
   width: min(728px, 100%);
-  height: 90px;
+  aspect-ratio: 1188 / 297;
+  padding: 0;
+  overflow: hidden;
+}
+
+.ad-frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: ad-crossfade-a 14s ease-in-out infinite;
+}
+
+/* Frame B starts hidden so the first creative shows immediately; the
+   keyframes take over once the animation runs. */
+.ad-frame-b {
+  opacity: 0;
+  animation-name: ad-crossfade-b;
+}
+
+@keyframes ad-crossfade-a {
+  0%, 42% { opacity: 1; }
+  50%, 92% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes ad-crossfade-b {
+  0%, 42% { opacity: 0; }
+  50%, 92% { opacity: 1; }
+  100% { opacity: 0; }
 }
 
 /* Page layout ----------------------------------------------------------- */
@@ -461,10 +494,6 @@ button, input, select {
     padding: 0.6rem 1rem;
   }
 
-  .ad-leaderboard {
-    height: 72px;
-  }
-
   .page-shell {
     grid-template-columns: 1fr;
     overflow: visible;
@@ -502,10 +531,6 @@ button, input, select {
   .search-wrap,
   .select-wrap {
     width: 100%;
-  }
-
-  .ad-leaderboard {
-    height: 60px;
   }
 
   .ad-rectangle {
