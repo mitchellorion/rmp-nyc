@@ -353,14 +353,6 @@ async function geocodeRestaurant(restaurant) {
   }
 }
 
-function createMarkerElement() {
-  const el = document.createElement("div");
-  el.className = "restaurant-marker";
-  el.setAttribute("role", "button");
-  el.setAttribute("aria-label", "Restaurant location");
-  return el;
-}
-
 function markerIsInViewport(coordinates) {
   return map.getBounds().contains([coordinates.lon, coordinates.lat]);
 }
@@ -369,7 +361,7 @@ function addMarker(restaurant, coordinates) {
   const restaurantWithPoint = { ...restaurant, point: coordinates };
   activeRestaurants.push(restaurantWithPoint);
 
-  const marker = new maplibregl.Marker({ element: createMarkerElement() })
+  const marker = new maplibregl.Marker({ element: createMarkerElement(restaurant) })
     .setLngLat([coordinates.lon, coordinates.lat])
     .setPopup(new maplibregl.Popup({ offset: 20 }).setHTML(popupContent(restaurant)));
 
