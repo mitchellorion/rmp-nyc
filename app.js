@@ -302,7 +302,7 @@ function popupContent(restaurant) {
 
   return `
     <div>
-      <span class="popup-name">${restaurant.name}</span>
+      <span class="popup-name">${brandChipMarkup(restaurant)}${restaurant.name}</span>
       <span class="popup-meta">${restaurant.address}</span>
       <span class="popup-meta">${restaurant.city || "Brooklyn, NY"}</span>
       ${restaurant.phone ? `<span class="popup-meta">${restaurant.phone}</span>` : ""}
@@ -419,8 +419,28 @@ function showUserLocation(position, options = {}) {
   }
 }
 
-// On load, center the map on the visitor's location. Never blocks startup:
-// if permission is denied or slow, the map stays on the city-wide view.
+// Generous NYC bounding box. Desktop geolocation (WiFi/IP based) can be
+// wildly inaccurate, and a fix outside the city would fly the map to an
+// empty area - the "map disappeared" effect.
+const NYC_BOUNDS = {
+  west: -74.26,
+  south: 40.49,
+  east: -73.69,
+  north: 40.93,
+};
+
+function isWithinNYC(lon, lat) {
+  return (
+    lon >= NYC_BOUNDS.west &&
+    lon <= NYC_BOUNDS.east &&
+    lat >= NYC_BOUNDS.south &&
+    lat <= NYC_BOUNDS.north
+  );
+}
+
+// On load, center the map on the visitor's location when they are inside
+// NYC. Denied permission or a fix outside the city keeps the city-wide
+// view. Never blocks startup.
 function tryInitialUserLocation() {
   if (!navigator.geolocation) {
     return;
@@ -428,12 +448,16 @@ function tryInitialUserLocation() {
 
   navigator.geolocation.getCurrentPosition(
     (position) => {
+      const { longitude, latitude } = position.coords;
+      if (!isWithinNYC(longitude, latitude)) {
+        return;
+      }
       showUserLocation(position);
       if (!userInteractedWithMap) {
         map.flyTo({
-          center: [position.coords.longitude, position.coords.latitude],
+          center: [longitude, latitude],
           zoom: 14,
-          duration: 1600,
+          duration: 1200,
         });
       }
     },
@@ -479,7 +503,7 @@ function renderRestaurantList(items) {
     item.type = "button";
     item.className = "restaurant-item";
     item.innerHTML = `
-      <strong>${restaurant.name}</strong>
+      <strong>${brandChipMarkup(restaurant)}${restaurant.name}</strong>
       <span>${restaurant.address}</span>
       <small>${restaurant.city || "Brooklyn, NY"}</small>
     `;

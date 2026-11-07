@@ -9,8 +9,8 @@ This repository contains a lightweight static website for exploring restaurants 
 - Borough filtering for Brooklyn, the Bronx, Manhattan, Queens, and Staten Island
 - Clickable list panel for restaurant locations
 - Viewport-driven rendering: only restaurants visible on the map are shown as markers and in the list
-- Brand-styled markers for major chains (McDonald's, Burger King, Popeyes, Dunkin', KFC, and more)
-- On load, the map zooms to the visitor's location (falls back to a city-wide view when permission is denied)
+- Brand-colored map markers for major chains, with monogram brand chips in the list and popups (McDonald's, Burger King, Popeyes, Dunkin', KFC, and more)
+- On load, the map zooms to the visitor's location (falls back to a city-wide view when permission is denied or the fix is outside NYC)
 - Responsive layout for desktop and mobile
 
 ## Run locally

@@ -1,17 +1,9 @@
-// Brand-styled map markers.
-// Chains get a marker in their brand colors with a monogram (or inline SVG
-// logo); everything else keeps the neutral RMP accent dot. This file is
-// shared by the live map and any preview/test pages.
+// Brand styling shared by the map, the restaurant list, and popups.
+// Map markers are uniform dots that change color per brand; the monogram
+// chips (brand chip) live next to restaurant names in the list and popups.
 
 const BRAND_STYLES = [
-  {
-    match: /mcdonald/i,
-    label: "M",
-    bg: "#da291c",
-    fg: "#ffc72c",
-    // Golden arches drawn as two rounded arches.
-    svg: '<svg viewBox="0 0 20 14" aria-hidden="true"><path d="M2.5 12.5C2.5 6.5 4 1.5 6.8 1.5 8.3 1.5 9.3 7.5 10 9.5 10.7 7.5 11.7 1.5 13.2 1.5 16 1.5 17.5 6.5 17.5 12.5" fill="none" stroke="#ffc72c" stroke-width="3" stroke-linecap="round"/></svg>',
-  },
+  { match: /mcdonald/i, label: "M", bg: "#da291c", fg: "#ffc72c" },
   { match: /burger king/i, label: "BK", bg: "#d62300", fg: "#ffffff" },
   { match: /popeye/i, label: "P", bg: "#f05a28", fg: "#ffffff" },
   { match: /kentucky fried chicken|\bkfc\b/i, label: "K", bg: "#e4002b", fg: "#ffffff" },
@@ -36,24 +28,28 @@ function getBrandStyle(restaurant) {
   return null;
 }
 
+// Map marker: a uniform dot, tinted with the brand color when known.
+// Kept deliberately simple - no text, logos, or transforms - so it tracks
+// the map cleanly.
 function createMarkerElement(restaurant) {
   const el = document.createElement("div");
   const brand = getBrandStyle(restaurant);
 
+  el.className = "restaurant-marker";
   if (brand) {
-    el.className = "restaurant-marker restaurant-marker--branded";
     el.style.setProperty("--marker-bg", brand.bg);
-    el.style.setProperty("--marker-fg", brand.fg);
-    if (brand.svg) {
-      el.innerHTML = brand.svg;
-    } else {
-      el.textContent = brand.label;
-    }
-  } else {
-    el.className = "restaurant-marker";
   }
 
   el.setAttribute("role", "button");
   el.setAttribute("aria-label", `${restaurant.name} location`);
   return el;
+}
+
+// Monogram chip shown beside restaurant names in the list and popups.
+function brandChipMarkup(restaurant) {
+  const brand = getBrandStyle(restaurant);
+  if (!brand) {
+    return "";
+  }
+  return `<span class="brand-chip" style="--chip-bg: ${brand.bg}; --chip-fg: ${brand.fg}">${brand.label}</span>`;
 }
