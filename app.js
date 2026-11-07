@@ -165,6 +165,113 @@ const map = new maplibregl.Map({
 map.dragRotate.disable();
 map.touchZoomRotate.disableRotation();
 
+// The AWS Standard style was authored for engines that report multipolygon
+// features as "Polygon". MapLibre v5 reports them as "MultiPolygon", so style
+// filters comparing geometry-type silently drop those features. This hid
+// water bodies, rivers, and other detail at low zooms. Rewrite the
+// comparisons to accept both forms.
+function acceptMultiGeometry(filter) {
+  if (!Array.isArray(filter)) {
+    return filter;
+  }
+
+  if (
+    (filter[0] === "==" || filter[0] === "!=") &&
+    Array.isArray(filter[1]) &&
+    filter[1][0] === "geometry-type" &&
+    typeof filter[2] === "string" &&
+    !filter[2].startsWith("Multi")
+  ) {
+    return [
+      "match",
+      ["geometry-type"],
+      [filter[2], `Multi${filter[2]}`],
+      filter[0] === "==",
+      filter[0] !== "==",
+    ];
+  }
+
+  return filter.map(acceptMultiGeometry);
+}
+
+// The style only reveals most road classes close up (minzoom 12-15.5). Lower
+// the gates so streets are visible at city-wide zooms, and shift each road
+// layer's fade-in opacity stops by the same amount to keep the hierarchy.
+const ROAD_MIN_ZOOM_RULES = [
+  [/motorway-trunk-link/, 8],
+  [/motorway|trunk/, 6],
+  [/primary-link|secondary-link/, 10],
+  [/primary|secondary/, 9],
+  [/tertiary/, 10],
+  [/minor/, 11],
+];
+
+function roadTargetMinZoom(layerId) {
+  for (const [pattern, minZoom] of ROAD_MIN_ZOOM_RULES) {
+    if (pattern.test(layerId)) {
+      return minZoom;
+    }
+  }
+  return 12;
+}
+
+function shiftZoomStops(expression, shift) {
+  if (!Array.isArray(expression) || expression[0] !== "interpolate") {
+    return expression;
+  }
+
+  const shifted = expression.slice(0, 3);
+  for (let index = 3; index < expression.length; index += 2) {
+    shifted.push(Math.max(0, expression[index] + shift), expression[index + 1]);
+  }
+  return shifted;
+}
+
+let basemapStylePatched = false;
+map.on("styledata", () => {
+  if (basemapStylePatched) {
+    return;
+  }
+
+  const style = map.getStyle();
+  if (!style || !Array.isArray(style.layers)) {
+    return;
+  }
+  if (!style.layers.some((layer) => layer.id === "water_fill")) {
+    return;
+  }
+  basemapStylePatched = true;
+
+  for (const layer of style.layers) {
+    if (layer.filter) {
+      try {
+        map.setFilter(layer.id, acceptMultiGeometry(layer.filter));
+      } catch (error) {
+        // Keep the original filter if the rewritten form is rejected.
+      }
+    }
+
+    if (
+      layer["source-layer"] === "roads" &&
+      layer.type === "line" &&
+      typeof layer.minzoom === "number"
+    ) {
+      const targetMinZoom = roadTargetMinZoom(layer.id);
+      if (layer.minzoom > targetMinZoom) {
+        map.setLayerZoomRange(layer.id, targetMinZoom, layer.maxzoom ?? 22);
+        const opacity = layer.paint && layer.paint["line-opacity"];
+        if (Array.isArray(opacity) && opacity[0] === "interpolate") {
+          map.setPaintProperty(
+            layer.id,
+            "line-opacity",
+            shiftZoomStops(opacity, targetMinZoom - layer.minzoom)
+          );
+        }
+      }
+    }
+  }
+});
+
 const searchInput = document.getElementById("restaurant-search");
 const countEl = document.getElementById("restaurant-count");
 const listEl = document.getElementById("restaurant-list");
