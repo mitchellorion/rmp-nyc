@@ -8,25 +8,21 @@
   justify-content: center;
   width: auto;
   min-width: 44px;
-  height: 44px;
+  height: 40px;
   padding: 0 14px;
-  gap: 6px;
-  border: none;
+  border: 1px solid #e5e7eb;
   border-radius: 10px;
   background: #ffffff;
-  color: var(--primary, #2563eb);
-  font-weight: 700;
-  font-size: 0.85rem;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  color: var(--primary, #1d4ed8);
+  font-weight: 600;
+  font-size: 0.82rem;
+  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.12);
   cursor: pointer;
-  transition: background 0.18s ease, transform 0.18s ease;
+  transition: background 0.15s ease, border-color 0.15s ease;
 }
 
 .user-location-button:hover,
 .user-location-button:focus-visible {
-  background: #f0f6ff;
-}
-
-.user-location-button:active {
-  transform: translateY(1px);
+  background: #eff6ff;
+  border-color: #bfdbfe;
 }

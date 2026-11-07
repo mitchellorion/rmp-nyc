@@ -55,24 +55,26 @@
       </div>
     </header>
 
-    <div class="ad-spot ad-spot-banner" aria-label="Advertisement">
-      <span class="ad-label">Advertisement</span>
-      <div class="ad-placeholder">728 × 90 ad space</div>
+    <!-- Leaderboard ad slot: replace the inner .ad-size span with your ad tag -->
+    <div class="ad-strip">
+      <div class="ad-slot ad-leaderboard" aria-label="Advertisement">
+        <span class="ad-size">728 × 90</span>
+      </div>
     </div>
 
     <main class="page-shell">
       <aside class="restaurant-panel">
         <div class="panel-header">
           <div>
-            <p class="eyebrow light">Participating locations</p>
+            <p class="eyebrow">Participating locations</p>
             <h2 id="restaurant-count">0 restaurants</h2>
           </div>
           <button id="reset-button" type="button" class="ghost-button">Reset</button>
         </div>
         <div id="restaurant-list" class="restaurant-list" aria-live="polite"></div>
-        <div class="ad-spot ad-spot-panel" aria-label="Advertisement">
-          <span class="ad-label">Sponsored</span>
-          <div class="ad-placeholder">300 × 250 ad space</div>
+        <!-- Rectangle ad slot: replace the inner .ad-size span with your ad tag -->
+        <div class="ad-slot ad-rectangle" aria-label="Advertisement">
+          <span class="ad-size">300 × 250</span>
         </div>
       </aside>
 

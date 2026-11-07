@@ -4,18 +4,19 @@
 
 :root {
   --bg: #f6f7f9;
-  --panel: #ffffff;
-  --panel-alt: #eef3fc;
-  --primary: #2563eb;
-  --primary-dark: #1e40af;
+  --surface: #ffffff;
+  --surface-alt: #f8fafc;
+  --primary: #1d4ed8;
+  --primary-soft: #eff6ff;
+  --primary-border: #bfdbfe;
   --accent: #f59e0b;
   --text: #0f172a;
   --muted: #64748b;
-  --soft-border: #e2e8f0;
-  --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06);
-  --shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
-  --shadow-lg: 0 18px 40px rgba(15, 23, 42, 0.12);
-  --radius: 14px;
+  --faint: #94a3b8;
+  --hairline: #e5e7eb;
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05);
+  --shadow: 0 10px 30px rgba(15, 23, 42, 0.1);
+  --radius: 12px;
   --radius-sm: 10px;
   --radius-pill: 999px;
 }
@@ -44,8 +45,7 @@ button, input, select {
   font: inherit;
 }
 
-/* Focus ring used across the app */
-:where(button, input, select, a):focus-visible {
+:where(button, a):focus-visible {
   outline: 2px solid var(--primary);
   outline-offset: 2px;
 }
@@ -53,54 +53,48 @@ button, input, select {
 /* Header --------------------------------------------------------------- */
 .site-header {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  padding: 1.25rem 1.5rem;
-  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
-  border-bottom: 1px solid var(--soft-border);
+  padding: 0.85rem 1.5rem;
+  background: var(--surface);
+  border-bottom: 1px solid var(--hairline);
 }
 
 .brand-block {
   display: flex;
   align-items: center;
-  gap: 0.9rem;
+  gap: 0.75rem;
 }
 
 .brand-mark {
   display: grid;
   place-items: center;
-  width: 48px;
-  height: 48px;
+  width: 40px;
+  height: 40px;
   border-radius: var(--radius-sm);
-  background: linear-gradient(135deg, var(--primary), #60a5fa);
-  color: white;
+  background: var(--primary);
+  color: #ffffff;
+  font-size: 0.76rem;
   font-weight: 800;
-  font-size: 0.95rem;
-  letter-spacing: 0.06em;
-  box-shadow: var(--shadow);
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  letter-spacing: 0.05em;
+  box-shadow: 0 4px 10px rgba(29, 78, 216, 0.25);
 }
 
 .eyebrow {
-  margin: 0 0 0.2rem;
-  font-size: 0.72rem;
+  margin: 0 0 0.15rem;
+  font-size: 0.66rem;
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--primary-dark);
-}
-
-.eyebrow.light {
-  color: rgba(255, 255, 255, 0.78);
+  color: var(--primary);
 }
 
 .site-header h1 {
   margin: 0;
-  font-size: clamp(1.5rem, 2vw, 2rem);
-  letter-spacing: -0.04em;
-  line-height: 1.1;
-  color: var(--text);
+  font-size: clamp(1.2rem, 1.6vw, 1.5rem);
+  letter-spacing: -0.03em;
+  line-height: 1.15;
 }
 
 .header-actions {
@@ -113,24 +107,29 @@ button, input, select {
 .search-wrap, .select-wrap {
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
-  min-width: 190px;
-  font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  color: var(--muted);
+  gap: 0.3rem;
+  min-width: 200px;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--faint);
 }
 
 .search-wrap input,
 .select-wrap select {
-  border: 1px solid var(--soft-border);
+  border: 1px solid var(--hairline);
   border-radius: var(--radius-sm);
-  background: white;
-  min-height: 42px;
-  padding: 0.6rem 0.85rem;
+  background: var(--surface);
+  min-height: 40px;
+  padding: 0.45rem 0.75rem;
   color: var(--text);
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: normal;
+  text-transform: none;
   box-shadow: var(--shadow-sm);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .search-wrap input:hover,
@@ -139,28 +138,83 @@ button, input, select {
 }
 
 .search-wrap input:focus,
-.select-wrap select:focus {
+.select-wrap select:focus,
+.search-wrap input:focus-visible,
+.select-wrap select:focus-visible {
+  outline: none;
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+  box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.12);
 }
 
-/* Page layout ---------------------------------------------------------- */
+.select-wrap select {
+  appearance: none;
+  padding-right: 2.1rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.7rem center;
+  background-size: 14px;
+  cursor: pointer;
+}
+
+/* Ad slots -------------------------------------------------------------- */
+.ad-strip {
+  display: flex;
+  justify-content: center;
+  padding: 0.7rem 1.5rem;
+}
+
+.ad-slot {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface-alt);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.ad-slot::before {
+  content: "Advertisement";
+  position: absolute;
+  top: 0.4rem;
+  left: 0.6rem;
+  font-size: 0.56rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--faint);
+  pointer-events: none;
+}
+
+.ad-size {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--faint);
+}
+
+.ad-leaderboard {
+  width: min(728px, 100%);
+  height: 90px;
+}
+
+/* Page layout ----------------------------------------------------------- */
 .page-shell {
   display: grid;
-  grid-template-columns: minmax(300px, 400px) minmax(0, 1fr);
+  grid-template-columns: minmax(320px, 400px) minmax(0, 1fr);
   flex: 1;
   min-height: 0;
   overflow: hidden;
 }
 
-/* Restaurant side panel ------------------------------------------------ */
+/* Restaurant panel ------------------------------------------------------ */
 .restaurant-panel {
   display: flex;
   flex-direction: column;
-  background: linear-gradient(180deg, #0b1220 0%, #111827 100%);
-  color: white;
-  padding: 1.25rem;
-  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  min-height: 0;
+  padding: 1rem;
+  background: var(--surface);
+  border-right: 1px solid var(--hairline);
 }
 
 .panel-header {
@@ -168,225 +222,183 @@ button, input, select {
   justify-content: space-between;
   align-items: center;
   gap: 0.75rem;
-  margin-bottom: 1rem;
-  padding-bottom: 0.75rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 0.8rem;
+  margin-bottom: 0.8rem;
+  border-bottom: 1px solid var(--hairline);
 }
 
 .panel-header h2 {
   margin: 0;
-  font-size: clamp(1.1rem, 1.4vw, 1.45rem);
+  font-size: clamp(1.05rem, 1.3vw, 1.35rem);
   letter-spacing: -0.02em;
 }
 
 .ghost-button {
   appearance: none;
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  background: rgba(255, 255, 255, 0.06);
-  color: white;
+  border: 1px solid var(--hairline);
+  background: var(--surface);
+  color: var(--muted);
   border-radius: var(--radius-sm);
-  padding: 0.5rem 0.85rem;
-  font-size: 0.85rem;
+  padding: 0.45rem 0.8rem;
+  font-size: 0.8rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
 }
 
 .ghost-button:hover {
-  background: rgba(255, 255, 255, 0.12);
-  border-color: rgba(255, 255, 255, 0.32);
-}
-
-.ghost-button:active {
-  transform: translateY(1px);
+  background: var(--primary-soft);
+  border-color: var(--primary-border);
+  color: var(--primary);
 }
 
 .restaurant-list {
   flex: 1 1 auto;
   min-height: 0;
   overflow-y: auto;
-  padding-right: 0.4rem;
-  margin-right: -0.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  padding: 0.15rem 0.35rem 0.35rem 0.15rem;
 }
 
-/* Custom scrollbar for webkit browsers */
 .restaurant-list::-webkit-scrollbar {
-  width: 6px;
+  width: 8px;
 }
 
 .restaurant-list::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.04);
-  border-radius: var(--radius-pill);
+  background: transparent;
 }
 
 .restaurant-list::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.18);
+  background: #cbd5e1;
   border-radius: var(--radius-pill);
+  border: 2px solid var(--surface);
 }
 
 .restaurant-list::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.28);
+  background: #94a3b8;
 }
 
 .restaurant-item {
   width: 100%;
   text-align: left;
-  background: rgba(255, 255, 255, 0.055);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-left: 3px solid transparent;
+  background: var(--surface);
+  border: 1px solid var(--hairline);
   border-radius: var(--radius-sm);
-  padding: 0.9rem 1rem;
-  margin-bottom: 0.6rem;
-  color: white;
+  padding: 0.75rem 0.85rem;
+  color: var(--text);
   cursor: pointer;
-  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
-}
-
-.restaurant-item:last-child {
-  margin-bottom: 0;
+  transition: border-color 0.18s ease, background 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
 }
 
 .restaurant-item:hover,
 .restaurant-item:focus-visible {
-  background: rgba(255, 255, 255, 0.1);
-  border-left-color: var(--primary);
-  border-color: rgba(255, 255, 255, 0.18);
-  transform: translateY(-2px);
+  border-color: var(--primary-border);
+  background: var(--primary-soft);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-1px);
 }
 
 .restaurant-item strong {
   display: block;
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   font-weight: 600;
-  margin-bottom: 0.3rem;
   letter-spacing: -0.01em;
+  margin-bottom: 0.25rem;
 }
 
 .restaurant-item span,
 .restaurant-item small {
   display: block;
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 0.83rem;
-  line-height: 1.5;
+  color: var(--muted);
+  font-size: 0.8rem;
+  line-height: 1.45;
 }
 
 .empty-state {
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 0.9rem;
-  text-align: center;
+  margin: 0;
   padding: 2rem 1rem;
+  text-align: center;
+  color: var(--faint);
+  font-size: 0.9rem;
   line-height: 1.6;
 }
 
-/* Ad spots ------------------------------------------------------------- */
-.ad-spot {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border: 1.5px dashed var(--soft-border);
-  background: var(--panel-alt);
-  border-radius: var(--radius);
-  color: var(--muted);
-  text-align: center;
+.ad-rectangle {
+  flex-shrink: 0;
+  width: 100%;
+  height: 250px;
+  margin-top: 0.9rem;
 }
 
-.ad-label {
-  font-size: 0.62rem;
-  font-weight: 800;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 0.35rem;
-}
-
-.ad-placeholder {
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: #94a3b8;
-}
-
-.ad-spot-banner {
-  margin: 0.75rem 1.5rem 0;
-  padding: 0.6rem 1rem;
-  min-height: 90px;
-}
-
-.ad-spot-panel {
-  margin-top: 1rem;
-  padding: 0.9rem;
-  min-height: 250px;
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(255, 255, 255, 0.16);
-}
-
-.ad-spot-panel .ad-label,
-.ad-spot-panel .ad-placeholder {
-  color: rgba(255, 255, 255, 0.55);
-}
-
-/* Map panel ------------------------------------------------------------ */
+/* Map panel ------------------------------------------------------------- */
 .map-panel {
+  position: relative;
   display: flex;
   flex-direction: column;
   min-height: 0;
-  position: relative;
-  background: #0f172a;
-}
-
-.status-bar {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.7rem 1rem;
-  background: rgba(255, 255, 255, 0.96);
-  border-bottom: 1px solid var(--soft-border);
-  color: var(--text);
-  font-size: 0.85rem;
-  font-weight: 600;
-  box-shadow: var(--shadow-sm);
+  background: #0b1220;
 }
 
 #map {
   flex: 1;
-  min-height: 500px;
   width: 100%;
+  min-height: 480px;
 }
 
-/* Map popups and markers ----------------------------------------------- */
+.status-bar {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  max-width: min(440px, calc(100% - 1.5rem));
+  padding: 0.45rem 0.9rem;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow);
+  color: var(--text);
+  font-size: 0.78rem;
+  font-weight: 600;
+  z-index: 5;
+}
+
+/* Map popups and markers ------------------------------------------------ */
 .maplibregl-popup-content {
   border-radius: var(--radius-sm);
-  padding: 12px 14px;
+  padding: 10px 12px;
   font-family: "Inter", sans-serif;
   color: var(--text);
-  box-shadow: var(--shadow-lg);
-  border: 1px solid var(--soft-border);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--hairline);
 }
 
 .maplibregl-popup-close-button {
   color: var(--muted);
-  font-size: 1.1rem;
-  padding: 0.25rem;
+  font-size: 1.05rem;
+  padding: 0.2rem;
 }
 
 .restaurant-marker {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
   background: var(--accent);
-  border: 2.5px solid #ffffff;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.25), 0 2px 6px rgba(0, 0, 0, 0.4);
   cursor: pointer;
-  transition: transform 0.2s ease;
+  transition: transform 0.18s ease;
 }
 
 .restaurant-marker:hover {
-  transform: scale(1.15);
+  transform: scale(1.2);
 }
 
 .popup-name {
   display: block;
-  margin-bottom: 0.35rem;
+  margin-bottom: 0.3rem;
   font-size: 1rem;
   font-weight: 700;
 }
@@ -394,16 +406,16 @@ button, input, select {
 .popup-meta {
   display: block;
   color: var(--muted);
-  font-size: 0.85rem;
-  line-height: 1.55;
+  font-size: 0.82rem;
+  line-height: 1.5;
 }
 
 .popup-link {
   display: inline-block;
-  margin-top: 0.5rem;
-  color: var(--primary-dark);
+  margin-top: 0.4rem;
+  color: var(--primary);
   font-weight: 600;
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   text-decoration: none;
 }
 
@@ -411,57 +423,58 @@ button, input, select {
   text-decoration: underline;
 }
 
-/* Responsive ----------------------------------------------------------- */
+/* Responsive ------------------------------------------------------------ */
 @media (max-width: 980px) {
   .site-header {
     flex-direction: column;
     align-items: stretch;
-  }
-
-  .brand-block {
-    margin-bottom: 0.25rem;
+    padding: 1rem;
+    gap: 0.9rem;
   }
 
   .header-actions {
     width: 100%;
-    gap: 0.75rem;
   }
 
   .search-wrap,
   .select-wrap {
-    flex: 1 1 200px;
+    flex: 1 1 45%;
     min-width: 0;
   }
 
-  .ad-spot-banner {
-    margin-left: 1rem;
-    margin-right: 1rem;
+  .ad-strip {
+    padding: 0.6rem 1rem;
+  }
+
+  .ad-leaderboard {
+    height: 72px;
   }
 
   .page-shell {
     grid-template-columns: 1fr;
+    overflow: visible;
   }
 
   .restaurant-panel {
     border-right: none;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    max-height: 55vh;
-  }
-
-  .ad-spot-panel {
-    min-height: 160px;
+    border-bottom: 1px solid var(--hairline);
   }
 
   .restaurant-list {
-    max-height: none;
+    flex: none;
+    max-height: 340px;
+  }
+
+  .ad-rectangle {
+    height: 180px;
+  }
+
+  #map {
+    min-height: 420px;
   }
 }
 
 @media (max-width: 640px) {
-  .site-header {
-    padding: 1rem;
-  }
-
   .header-actions {
     flex-direction: column;
     align-items: stretch;
@@ -469,15 +482,25 @@ button, input, select {
 
   .search-wrap,
   .select-wrap {
-    flex: 1 1 auto;
     width: 100%;
   }
 
-  .restaurant-panel {
-    padding: 1rem;
+  .ad-leaderboard {
+    height: 60px;
+  }
+
+  .ad-rectangle {
+    height: 160px;
   }
 
   #map {
-    min-height: 380px;
+    min-height: 340px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
   }
 }
