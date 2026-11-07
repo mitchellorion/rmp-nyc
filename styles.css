@@ -69,12 +69,10 @@ button, input, select {
 
 .brand-mark {
   display: block;
-  width: 40px;
-  height: 40px;
-  border-radius: var(--radius-sm);
-  object-fit: cover;
-  border: 1px solid var(--hairline);
-  box-shadow: var(--shadow-sm);
+  height: 72px;
+  width: auto;
+  /* drop-shadow follows the artwork's transparency, unlike box-shadow */
+  filter: drop-shadow(0 2px 4px rgba(15, 23, 42, 0.18));
 }
 
 .eyebrow {
@@ -492,6 +490,10 @@ button, input, select {
 }
 
 @media (max-width: 640px) {
+  .brand-mark {
+    height: 56px;
+  }
+
   .header-actions {
     flex-direction: column;
     align-items: stretch;

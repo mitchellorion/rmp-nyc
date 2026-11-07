@@ -26,7 +26,7 @@
   <body>
     <header class="site-header">
       <div class="brand-block">
-        <img class="brand-mark" src="assets/RMP-logo.jpg" alt="RMP NYC logo" />
+        <img class="brand-mark" src="assets/RMP-logo.webp" alt="RMP NYC logo" />
         <div>
           <p class="eyebrow">Ready Meal Program</p>
           <h1>NYC Restaurant Map</h1>
@@ -56,10 +56,12 @@
       </div>
     </header>
 
-    <!-- Leaderboard ad slot: replace the inner .ad-size span with your ad tag -->
+    <!-- Top ad slot: crossfades between the two banner creatives.
+         Swap the .ad-frame images (or their src) to rotate other creatives. -->
     <div class="ad-strip">
-      <div class="ad-slot ad-leaderboard" aria-label="Advertisement">
-        <span class="ad-size">728 × 90</span>
+      <div class="ad-slot ad-creative" aria-label="Advertisement">
+        <img class="ad-frame ad-frame-a" src="assets/ad-creative-1.webp" alt="Advertisement" />
+        <img class="ad-frame ad-frame-b" src="assets/ad-creative-2.webp" alt="Advertisement" />
       </div>
     </div>
 
