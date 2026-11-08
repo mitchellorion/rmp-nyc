@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+/* Theme customization lives in tailwind.config.cjs, bridged in via @config. */
+@config "../tailwind.config.cjs";
+
+/* The palette: warm paper, deep ink, taxi-yellow accent, and one colour per borough. */
+:root {
+  --paper: #fff4d6;
+  --ink: #1b1530;
+  --accent: #ffc93c;
+  --on-accent: #1b1530;
+  --pop: #ff5a3c;
+  --on-pop: #1b1530;
+  --water: #b9e3ff;
+  --manhattan: #ffc93c;
+  --brooklyn: #ff9ec4;
+  --queens: #7fe3b8;
+  --bronx: #ffa465;
+  --staten: #9ccfff;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background: var(--paper);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+  body {
+    font-family: "Atkinson Hyperlegible", system-ui, sans-serif;
+    color: var(--ink);
+  }
+  ::selection {
+    background: var(--accent);
+    color: var(--on-accent);
+  }
+}
+
+/* Playful backdrop: little polka dots on the page, rolling waves on the map. */
+.dots-bg {
+  background-image: radial-gradient(color-mix(in srgb, var(--ink) 14%, transparent) 1.5px, transparent 1.6px);
+  background-size: 22px 22px;
+}
+.waves-bg {
+  background-color: var(--water);
+  background-image:
+    radial-gradient(circle at 16px 16px, rgba(255, 255, 255, 0.75) 2px, transparent 2.5px),
+    radial-gradient(circle at 48px 32px, rgba(255, 255, 255, 0.55) 1.5px, transparent 2px);
+  background-size: 64px 32px;
+}
+

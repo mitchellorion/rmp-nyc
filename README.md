@@ -1,65 +1,33 @@
-# RMP NYC Restaurant Map
+# Snap Map NYC
 
-This repository contains a lightweight static website for exploring restaurants participating in the New York State Restaurant Meals Program (RMP).
+A playful illustrated map of New York City restaurants that accept EBT through
+the Restaurant Meals Program. Live at [snapmapnyc.com](https://snapmapnyc.com)
+(GitHub Pages).
 
-## Included
+- 235 restaurants, pre-geocoded, one colour per borough
+- Hand-drawn SVG city map — no map library, no API keys
+- Filter by borough, sort by distance from an address or ZIP (OpenStreetMap
+  Nominatim, one request when the visitor asks for it)
+- Stateless: nothing stored, the page URL holds the search
 
-- Interactive map rendered with MapLibre GL JS and Amazon Location Service map tiles
-- Search by restaurant or address
-- Borough filtering for Brooklyn, the Bronx, Manhattan, Queens, and Staten Island
-- Clickable list panel for restaurant locations
-- Viewport-driven rendering: only restaurants visible on the map are shown as markers and in the list
-- Brand-colored map markers for major chains, with monogram brand chips in the list and popups (McDonald's, Burger King, Popeyes, Dunkin', KFC, and more)
-- On load, the map zooms to the visitor's location (falls back to a city-wide view when permission is denied or the fix is outside NYC)
-- Responsive layout for desktop and mobile
+## Stack
 
-## Run locally
+Vite + React (JSX), Tailwind CSS v4. No router.
 
-The site is driven by a runtime configuration file that holds your Amazon Location Service credentials.
+## Commands
 
-1. Copy the example config:
+```bash
+npm run dev        # development server
+npm run build      # preview build (dist-preview/)
+npm run build:prod # production build (dist/)
+node --test        # data tests
+```
 
-   ```bash
-   cp location-config.js.example location-config.js
-   ```
+## Deployment
 
-2. Edit `location-config.js` with your AWS Location API key and region.
+Push to `main`. The GitHub Actions workflow (`.github/workflows/pages.yml`)
+installs dependencies, builds `dist/`, and deploys it to GitHub Pages. The
+custom domain `snapmapnyc.com` is set via the `CNAME` file in `public/`; DNS
+must point at the Pages host for the domain to go live.
 
-3. Serve the root folder with a local web server:
-
-   ```bash
-   python -m http.server 8000
-   ```
-
-4. Open http://localhost:8000.
-
-## Deployment to GitHub Pages
-
-The included GitHub Actions workflow (`.github/workflows/pages.yml`) builds the site on every push to `main` and deploys it to GitHub Pages. The workflow generates `location-config.js` from repository secrets.
-
-Required repository secret:
-
-- `LOCATION_API_KEY` — an Amazon Location Service API key with permissions for `geo-places:Geocode` and `geo-maps:GetStyleDescriptor`/`geo-maps:GetTile`.
-
-The region is set in the workflow (`us-east-2` by default) and written into the generated config alongside the key.
-
-## Files
-
-- `index.html` — page structure and borough selection
-- `styles.css` — layout and visual styling
-- `app.js` — restaurant data, AWS Location geocoding, and map logic
-- `additional-boroughs.js` — Manhattan, Queens, and Staten Island restaurant data
-- `user-location.js` — browser geolocation control (device-native, displayed on the AWS map)
-
-## Geo services
-
-All map and geocoding requests use Amazon Location Service:
-
-- Map style and raster/vector tiles are loaded from `maps.geo.<region>.amazonaws.com`.
-- Restaurant addresses are geocoded via `places.geo.<region>.amazonaws.com/v2/geocode`.
-
-Browser geolocation (`navigator.geolocation`) is still used to obtain the user's current position, because there is no third-party replacement for device GPS/Wi-Fi positioning. The position is shown on the Amazon map.
-
-## GitHub Pages
-
-Enable GitHub Pages in the repository settings and publish from the GitHub Actions workflow.
+See `AGENTS.md` for project conventions and how to add a restaurant.

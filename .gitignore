@@ -1,7 +1,12 @@
-# Generated runtime config (created in CI from GitHub secrets)
-location-config.js
+node_modules/
+build.log
+vite.log
+harrier.log
+.node-compile-cache/
+server.js
+dist-preview/
+.built
+template-init/
 
-# Local server artifacts
-__pycache__/
-*.pyc
-.DS_Store
+# Build output
+dist/

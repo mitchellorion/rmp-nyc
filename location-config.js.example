@@ -1,6 +1,0 @@
-// Copy this file to location-config.js for local development.
-// In GitHub Pages deployments it is generated automatically by the workflow.
-window.LOCATION_CONFIG = {
-  apiKey: "YOUR_AWS_LOCATION_API_KEY",
-  region: "us-east-2",
-};
