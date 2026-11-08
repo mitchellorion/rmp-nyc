@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#fff4d6" />
+    <title>Accessibility | Snap Map NYC</title>
+    <meta
+      name="description"
+      content="How Snap Map NYC works toward WCAG 2.2 AA, what is known to fall short, and how to report a barrier."
+    />
+    <link rel="canonical" href="https://snapmapnyc.com/accessibility.html" />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Gabarito:wght@600;700;800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap"
+    />
+    <link rel="stylesheet" href="legal.css" />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to the text</a>
+    <header class="site-head">
+      <div class="wrap">
+        <a class="brand" href="./">
+          <svg viewBox="0 0 32 32" aria-hidden="true">
+            <path d="M16 2c-6 0-10.5 4.4-10.5 10.2C5.5 20 16 30 16 30s10.5-10 10.5-17.8C26.5 6.4 22 2 16 2Z" fill="#ffc93c" stroke="#1b1530" stroke-width="2" />
+            <circle cx="16" cy="12" r="4" fill="#fff" stroke="#1b1530" stroke-width="2" />
+          </svg>
+          Snap Map NYC
+        </a>
+        <a class="back" href="./">Back to the map</a>
+      </div>
+    </header>
+
+    <main id="main" class="wrap" tabindex="-1">
+      <p class="eyebrow">Accessibility</p>
+      <h1>Using this site with a screen reader, keyboard, or large text</h1>
+      <p class="updated">Last updated November 8, 2026</p>
+
+      <p class="lede">
+        The people who need this site most are often older, disabled, or using an old phone on a slow
+        connection. Accessibility is not a nice-to-have here; it is the point.
+      </p>
+
+      <h2>Our target</h2>
+      <p>
+        We aim to meet WCAG 2.2 Level AA. That is a goal, not a certification: the site has not yet
+        been through an independent audit, and this page will say so until it has.
+      </p>
+
+      <h2>What the site does</h2>
+      <ul>
+        <li>Every restaurant on the map is also in a plain list below it, in reading order.</li>
+        <li>Fields have real labels, and status messages are announced when they change.</li>
+        <li>Everything works with a keyboard, with a visible focus ring on every control.</li>
+        <li>Text uses Atkinson Hyperlegible, designed for low vision, and scales with browser zoom.</li>
+        <li>Animations and smooth scrolling stop when your system asks for reduced motion.</li>
+        <li>Colour is never the only way to tell boroughs apart; each also has a name.</li>
+        <li>Tap targets are large, and the layout works in one column on a phone.</li>
+      </ul>
+
+      <h2>Known limitations</h2>
+      <ul>
+        <li>
+          <strong>The map is visual.</strong> Pins, borough shapes, and the pan-and-zoom view are hard
+          or impossible to use without sight. The list is the equivalent path, and it is complete.
+        </li>
+        <li>
+          <strong>Directions leave the site.</strong> The directions button opens Google Maps, which we
+          do not control and cannot make accessible.
+        </li>
+        <li>
+          <strong>The map is drawn by hand.</strong> Place names and shapes are simplified and are not
+          a survey-accurate reference.
+        </li>
+        <li>
+          <strong>No independent audit yet.</strong> The checks so far are our own, plus keyboard and
+          screen-reader testing by the maintainer.
+        </li>
+      </ul>
+
+      <h2>Tell us what is broken</h2>
+      <p>
+        If something stops you from finding a meal, that is a bug worth fixing quickly. Write to
+        <a href="mailto:hello@snapmapnyc.com">hello@snapmapnyc.com</a> with the page, what you were
+        trying to do, and what your browser or assistive technology is. We aim to reply within five
+        business days.
+      </p>
+
+      <h2>If you need a different format</h2>
+      <p>
+        The restaurant list can be shared as a plain text or spreadsheet file on request. Ask at the
+        address above.
+      </p>
+
+      <ul class="legal-nav">
+        <li><a href="terms.html">Terms of use</a></li>
+        <li><a href="privacy.html">Privacy</a></li>
+        <li><a href="sponsorship.html">Sponsorship policy</a></li>
+        <li><a href="partners.html">For partners</a></li>
+        <li><a href="./">Back to the map</a></li>
+      </ul>
+    </main>
+
+    <footer class="site-foot">
+      <div class="wrap">
+        <p><strong>Snap Map NYC</strong> is an independent guide.</p>
+        <p>
+          Not run by the City or State. Not affiliated with the USDA or NYS OTDA. Restaurant
+          participation can change, so confirm before you go.
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

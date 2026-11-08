@@ -10,3 +10,8 @@ template-init/
 
 # Build output
 dist/
+
+# Local config (analytics site code, etc.)
+.env
+.env.local
+.env.*.local

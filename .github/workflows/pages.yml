@@ -34,6 +34,11 @@ jobs:
         run: npm ci
 
       - name: Build production bundle
+        # Optional cookieless analytics. Set a repository variable named
+        # VITE_GOATCOUNTER_CODE to the site code from goatcounter.com; leave it unset
+        # and analytics stays off entirely.
+        env:
+          VITE_GOATCOUNTER_CODE: ${{ vars.VITE_GOATCOUNTER_CODE }}
         run: npm run build:prod
 
       - name: Configure GitHub Pages

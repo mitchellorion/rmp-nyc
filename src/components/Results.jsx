@@ -2,6 +2,7 @@ import { Globe, MapPin, Navigation, Phone } from "lucide-react";
 import { twMerge } from "tailwind-merge";
 import { useI18n } from "@/i18n/index.jsx";
 import { BOROUGH_VAR, foodEmoji } from "@/lib/geo.js";
+import { trackEvent } from "@/lib/analytics.js";
 import { Button, focusRing } from "./ui.jsx";
 
 const linkClass = twMerge(
@@ -58,13 +59,23 @@ function Card({ r, index, selected, distance, isNearest, onShow }) {
           <MapPin className="size-4" aria-hidden="true" />
           {selected ? t("results.onMap") : t("results.showMap")}
         </Button>
-        <a className={linkClass} href={directionsUrl(r)} target="_blank" rel="noreferrer noopener">
+        <a
+          className={linkClass}
+          href={directionsUrl(r)}
+          target="_blank"
+          rel="noreferrer noopener"
+          onClick={() => trackEvent("directions")}
+        >
           <Navigation className="size-4" aria-hidden="true" />
           {t("results.directions")}
           <span className="sr-only"> — {r.name}</span>
         </a>
         {r.phone && (
-          <a className={linkClass} href={`tel:${r.phone.replace(/[^\d+]/g, "")}`}>
+          <a
+            className={linkClass}
+            href={`tel:${r.phone.replace(/[^\d+]/g, "")}`}
+            onClick={() => trackEvent("call")}
+          >
             <Phone className="size-4" aria-hidden="true" />
             {t("results.call")}
             <span className="sr-only"> {r.name}, {r.phone}</span>

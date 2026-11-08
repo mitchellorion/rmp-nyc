@@ -9,6 +9,7 @@ import { MapView } from "@/components/MapView.jsx";
 import { Results } from "@/components/Results.jsx";
 import { bboxOfPoints, bboxOfShapes, isInNYC, miles, project } from "@/lib/geo.js";
 import { findPlace } from "@/lib/geocode.js";
+import { trackEvent } from "@/lib/analytics.js";
 import { readUrl, writeUrl } from "@/lib/url-state.js";
 import { BOROUGH_SHAPES } from "@/data/nyc-map.js";
 
@@ -50,6 +51,8 @@ export default function App() {
         setSelectedId(null);
         setStatus("ok");
         setMessage(t("finder.foundNear", { place: found.label }));
+        // Event name only: no address or place name is ever sent.
+        trackEvent("nearby-lookup");
       } catch (error) {
         if (error?.name === "AbortError") return;
         setPlace(null);
@@ -97,6 +100,7 @@ export default function App() {
         setSelectedId(null);
         setStatus("ok");
         setMessage(t("finder.foundNear", { place: "your location" }));
+        trackEvent("use-my-location");
       },
       () => {
         setStatus("error");

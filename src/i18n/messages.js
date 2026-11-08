@@ -84,9 +84,17 @@ export default {
     ],
   },
   footer: {
-    note: "Snap Map NYC is an independent guide and is not run by the City or State. The list can change, so please confirm with the restaurant before you go.",
-    privacy: "This site doesn't keep anything about you. An address you type is only used to sort the list.",
-    credits: "Borough outlines: NYC Open Data. Address search: OpenStreetMap.",
+    note: "Snap Map NYC is an independent guide. It is not run by the City or State, and it is not affiliated with the USDA or the New York State Office of Temporary and Disability Assistance. The list can change, so please confirm with the restaurant before you go.",
+    privacy: "No accounts, no cookies, no tracking that follows you. An address you type is only used to sort the list.",
+    credits: "Borough outlines: NYC Open Data. Address search and map data: © OpenStreetMap contributors.",
+    legalLabel: "The fine print",
+    legal: {
+      terms: "Terms of use",
+      privacy: "Privacy",
+      sponsorship: "Sponsorship policy",
+      accessibility: "Accessibility",
+      partners: "For partners",
+    },
     top: "Back to the top",
   },
   errors: {

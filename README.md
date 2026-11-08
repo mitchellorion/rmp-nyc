@@ -8,11 +8,42 @@ the Restaurant Meals Program. Live at [snapmapnyc.com](https://snapmapnyc.com)
 - Hand-drawn SVG city map — no map library, no API keys
 - Filter by borough, sort by distance from an address or ZIP (OpenStreetMap
   Nominatim, one request when the visitor asks for it)
-- Stateless: nothing stored, the page URL holds the search
+- Stateless: no accounts, no cookies, the page URL holds the search
+- Optional cookieless analytics (GoatCounter), off unless configured
 
 ## Stack
 
 Vite + React (JSX), Tailwind CSS v4. No router.
+
+## Pages
+
+The map is a single page. The fine print lives in plain HTML under `public/`, so it
+works on GitHub Pages without a router and prints cleanly:
+
+| Page | File |
+| --- | --- |
+| Terms of use | `public/terms.html` |
+| Privacy notice | `public/privacy.html` |
+| Sponsorship and editorial independence | `public/sponsorship.html` |
+| Accessibility statement | `public/accessibility.html` |
+| One-pager for partners and funders | `public/partners.html` |
+
+They share `public/legal.css`. The footer links to all of them with relative URLs
+(`terms.html`), which is why there is no leading slash. Replace
+`hello@snapmapnyc.com` with an address you actually monitor before launch.
+
+## Analytics
+
+Analytics is cookieless and aggregate, and it does nothing until you set a site code:
+
+```bash
+cp .env.example .env      # then set VITE_GOATCOUNTER_CODE=yourcode
+npm run build:prod
+```
+
+On GitHub, set the repository variable `VITE_GOATCOUNTER_CODE` instead of committing
+`.env`. Visitors whose browser sends Do Not Track or Global Privacy Control are never
+counted, because the script is not loaded for them. The privacy notice describes this.
 
 ## Commands
 

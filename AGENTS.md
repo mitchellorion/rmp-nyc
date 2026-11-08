@@ -14,13 +14,16 @@ one colour per borough, bouncing pins, wobbling stickers.
 
 A **Vite + React** single-page app (JSX), styled with **Tailwind CSS v4** (utilities; tokens in
 `tailwind.config.cjs`, CSS variables in `src/index.css`). No router: one page with the anchors
-`#top` and `#about`. Every `<a href="#id">` takes `onClick={jumpTo}` from `src/lib/in-page.js`
+`#top` and `#about`, plus plain HTML pages in `public/` for the legal text and the partner
+one-pager, linked from the footer with relative `terms.html`-style URLs. Every `<a href="#id">` takes `onClick={jumpTo}` from `src/lib/in-page.js`
 (the `<base href>` would otherwise turn the click into a load of `/#id` and lose `?borough=`).
 Icons come from `lucide-react`. There is no map library: the map is drawn by hand (see below).
 `package.json` is empty; do not `npm install` anything. React, react-dom, vite, lucide-react,
 `@radix-ui/react-slot`, `tailwind-merge` and Tailwind come from the platform.
 
-The app is **stateless**: no storage, no cookies, no forms that save anything, no analytics. The page
+The app is **stateless**: no accounts, no storage, no cookies, no forms that save anything. Optional
+cookieless analytics (GoatCounter) is off unless `VITE_GOATCOUNTER_CODE` is set, and is skipped for
+Do Not Track and Global Privacy Control; only event names are sent, never an address. The page
 address holds the search: `?borough=Brooklyn&near=11201`. The only outside call is the address
 lookup, which a visitor starts by pressing "Find spots near me": one request to OpenStreetMap's
 free address search (Nominatim), limited to NYC, nothing stored. A ZIP code that has restaurants is
@@ -36,6 +39,12 @@ StrictMode is on in dev. Effects clean up after themselves; renders are pure.
 index.html                   # title, description, page background, the one web-font link
 tailwind.config.cjs          # colour tokens, fonts, shadows, animations (bob, wobble, ring, drift, pop, rise)
 public/favicon.svg           # yellow map pin
+public/legal.css             # shared style for the static pages
+public/terms.html            # terms of use
+public/privacy.html          # privacy notice (Nominatim, GitHub Pages, GoatCounter)
+public/sponsorship.html      # sponsorship + editorial independence policy
+public/accessibility.html    # accessibility statement (WCAG 2.2 AA target)
+public/partners.html         # printable one-pager for partners and funders
 tests/data.test.js           # node --test: every restaurant has a borough and sits inside NYC
 src/
   main.jsx                   # StrictMode > I18nProvider > ErrorBoundary > App
@@ -48,6 +57,7 @@ src/
     geo.js                   # project(lon, lat) to map units, BOROUGHS, miles(), foodEmoji(name), bbox helpers
     geocode.js               # findPlace(text): ZIP from the list, else Nominatim
     url-state.js             # readUrl / writeUrl for ?borough= and ?near=
+    analytics.js             # initAnalytics / trackEvent, cookieless and opt-out aware
     in-page.js               # jumpTo for in-page links
   components/
     Header.jsx  Finder.jsx  Results.jsx  MapView.jsx  About.jsx  Footer.jsx  ui.jsx  ErrorBoundary.jsx

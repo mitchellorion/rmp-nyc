@@ -1,0 +1,724 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <title>Snap Map NYC: launch and funding playbook</title>
+    <style>
+      @page {
+        size: letter;
+        margin: 0.7in 0.75in 0.7in;
+      }
+      :root {
+        --ink: #1b1530;
+        --paper: #fff4d6;
+        --accent: #ffc93c;
+        --pop: #ff5a3c;
+        --muted: #5a5470;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        color: var(--ink);
+        font: 400 10.5pt/1.45 "Atkinson Hyperlegible", "DejaVu Sans", system-ui, sans-serif;
+      }
+      h1,
+      h2,
+      h3 {
+        font-family: "Gabarito", "DejaVu Sans", system-ui, sans-serif;
+        line-height: 1.2;
+        margin: 0;
+      }
+      h1 {
+        font-size: 26pt;
+        letter-spacing: -0.02em;
+      }
+      h2 {
+        font-size: 15pt;
+        margin: 22pt 0 6pt;
+        padding-bottom: 3pt;
+        border-bottom: 2pt solid var(--ink);
+        break-after: avoid;
+      }
+      h3 {
+        font-size: 11.5pt;
+        margin: 12pt 0 3pt;
+        break-after: avoid;
+      }
+      p,
+      ul,
+      ol {
+        margin: 5pt 0;
+      }
+      ul,
+      ol {
+        padding-left: 14pt;
+      }
+      li {
+        margin: 2.5pt 0;
+      }
+      .cover {
+        padding: 18pt 20pt;
+        border: 2pt solid var(--ink);
+        border-radius: 12pt;
+        background: var(--paper);
+        margin-bottom: 14pt;
+      }
+      .kicker {
+        font: 700 8.5pt/1.2 "Gabarito", system-ui, sans-serif;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+      .lede {
+        font-size: 12pt;
+        margin-top: 6pt;
+      }
+      .meta {
+        margin-top: 10pt;
+        font-size: 9pt;
+        color: var(--muted);
+      }
+      .box {
+        border: 1.5pt solid var(--ink);
+        border-radius: 8pt;
+        padding: 9pt 11pt;
+        margin: 9pt 0;
+        break-inside: avoid;
+      }
+      .box.warn {
+        background: #fff0ec;
+      }
+      .box.note {
+        background: var(--paper);
+      }
+      .box > :first-child {
+        margin-top: 0;
+      }
+      .box > :last-child {
+        margin-bottom: 0;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 7pt 0;
+        font-size: 9.5pt;
+        break-inside: avoid;
+      }
+      th,
+      td {
+        border: 1pt solid #b9b3c8;
+        padding: 4pt 6pt;
+        text-align: left;
+        vertical-align: top;
+      }
+      th {
+        background: var(--paper);
+        font-family: "Gabarito", system-ui, sans-serif;
+        font-size: 8.5pt;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+      }
+      code {
+        font-family: "DejaVu Sans Mono", ui-monospace, monospace;
+        font-size: 9pt;
+        background: #f1ecdc;
+        padding: 0 2pt;
+        border-radius: 2pt;
+      }
+      .checklist {
+        list-style: none;
+        padding-left: 0;
+      }
+      .checklist li {
+        margin: 4pt 0;
+        padding-left: 16pt;
+        position: relative;
+      }
+      .checklist li::before {
+        content: "\2610";
+        position: absolute;
+        left: 0;
+        font-size: 12pt;
+        line-height: 1;
+        top: 1pt;
+      }
+      .phase {
+        break-before: page;
+      }
+      .phase:first-of-type {
+        break-before: auto;
+      }
+      .tag {
+        display: inline-block;
+        padding: 1pt 6pt;
+        border: 1.2pt solid var(--ink);
+        border-radius: 999px;
+        font: 700 8pt/1.5 "Gabarito", system-ui, sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+      .two-col {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10pt;
+      }
+      .small {
+        font-size: 9pt;
+        color: var(--muted);
+      }
+      .fill {
+        display: inline-block;
+        min-width: 140pt;
+        border-bottom: 1pt solid var(--ink);
+      }
+      .mail {
+        border-left: 3pt solid var(--pop);
+        padding-left: 9pt;
+        margin: 6pt 0;
+        font-size: 9.5pt;
+      }
+      footer {
+        margin-top: 18pt;
+        padding-top: 6pt;
+        border-top: 1pt solid #b9b3c8;
+        font-size: 8.5pt;
+        color: var(--muted);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="cover">
+      <p class="kicker">Operations and funding plan</p>
+      <h1>Snap Map NYC<br />launch and funding playbook</h1>
+      <p class="lede">
+        What is now in the site, and the order to do everything else in: legal, analytics, the first
+        90 days, the sponsorship ask, the money mechanics, and the expansion that is worth doing.
+      </p>
+      <p class="meta">
+        Prepared for the owner of snapmapnyc.com · November 8, 2026 · Not legal or tax advice
+      </p>
+    </div>
+
+    <p>
+      The site already works. The missing pieces were the boring ones that funders and partners check
+      before they take a project seriously: a privacy notice, terms, an editorial independence policy,
+      a way to count visits without surveilling anyone, and a one-pager a program officer can read in
+      three minutes. Those are now built. This document is the order to use them in.
+    </p>
+
+    <h2>What was added to the repo</h2>
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 34%">File</th>
+          <th>What it is</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>public/terms.html</code></td>
+          <td>Terms of use: informational only, no warranty, liability cap, acceptable use, credits, New York law.</td>
+        </tr>
+        <tr>
+          <td><code>public/privacy.html</code></td>
+          <td>
+            Plain-language privacy notice covering the three things that actually leave a browser:
+            Nominatim lookups, GitHub Pages logs, and cookieless analytics.
+          </td>
+        </tr>
+        <tr>
+          <td><code>public/sponsorship.html</code></td>
+          <td>
+            Sponsorship and editorial independence policy: what money buys, and the list of things it
+            never buys.
+          </td>
+        </tr>
+        <tr>
+          <td><code>public/accessibility.html</code></td>
+          <td>WCAG 2.2 AA target, what is done, known gaps, and how to report a barrier.</td>
+        </tr>
+        <tr>
+          <td><code>public/partners.html</code></td>
+          <td>
+            Printable one-pager for nonprofits, hospitals, health plans, and funders: the gap, the
+            audience, three support levels, what gets reported back.
+          </td>
+        </tr>
+        <tr>
+          <td><code>public/legal.css</code></td>
+          <td>Shared styling for those pages, with a print stylesheet.</td>
+        </tr>
+        <tr>
+          <td><code>src/lib/analytics.js</code></td>
+          <td>
+            Cookieless GoatCounter loader plus <code>trackEvent</code>. Off unless configured, and
+            never loaded for Do Not Track or Global Privacy Control.
+          </td>
+        </tr>
+        <tr>
+          <td><code>src/components/Footer.jsx</code></td>
+          <td>
+            Links to all five pages, plus the wording that says the site is not run by the City or
+            State and is not affiliated with USDA or OTDA.
+          </td>
+        </tr>
+        <tr>
+          <td><code>.env.example</code>, <code>.github/workflows/pages.yml</code></td>
+          <td>
+            One place to set the analytics site code locally, and a repository variable hook for
+            deploys.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="box warn">
+      <p>
+        <strong>One thing to fix before you publish:</strong> the contact address on all five pages is
+        <code>hello@snapmapnyc.com</code>. Either set up mail forwarding at your registrar, or replace
+        it with an address you check. A legal page with a dead contact address is worse than no page.
+      </p>
+    </div>
+
+    <!-- PHASE 0 -->
+    <h2 class="phase">Phase 0: before the next deploy (this week)</h2>
+    <p class="small">About 3 hours, plus waiting time on the legal review.</p>
+    <ol class="checklist">
+      <li>
+        <strong>Fix the contact address.</strong> All five pages, plus the footer of the app. Set up
+        forwarding at your domain registrar, or swap in a real mailbox.
+      </li>
+      <li>
+        <strong>Read the four legal pages out loud and correct anything that is not true.</strong>
+        Check the effective date, the description of the data source, and the "current sponsors"
+        section. These are your words, not a template's.
+      </li>
+      <li>
+        <strong>Create the analytics account.</strong> Sign up at goatcounter.com, choose a site code
+        (for example <code>snapmapnyc</code>). Free for reasonable public, non-commercial use.
+      </li>
+      <li>
+        <strong>Turn it on.</strong> Locally: copy <code>.env.example</code> to <code>.env</code> and
+        set <code>VITE_GOATCOUNTER_CODE</code>. On GitHub: repository Settings, Secrets and variables,
+        Actions, Variables, new variable with the same name. Then push and redeploy.
+      </li>
+      <li>
+        <strong>Prove it works.</strong> Visit the live site, then check the GoatCounter dashboard for
+        one pageview. Open the browser console and confirm no cookie is set. In GoatCounter settings,
+        exclude your own IP so your own visits do not inflate the numbers.
+      </li>
+      <li>
+        <strong>Check the live links.</strong> Load snapmapnyc.com, scroll to the footer, and click all
+        five pages. They are plain files in <code>public/</code>, so they must return 200, not 404.
+      </li>
+      <li>
+        <strong>Get one hour of legal review.</strong> A law school clinic, a solo attorney, or a
+        nonprofit legal panel. Ask specifically about three things: the liability cap, the governing
+        law clause, and whether the privacy notice accurately describes Nominatim and the analytics.
+        Budget $0 to $1,200.
+      </li>
+      <li>
+        <strong>Check the source terms.</strong> Find the terms attached to the state list you built
+        <code>restaurants.json</code> from. Public records are usually reusable, but confirm, and note
+        it in the credits if a condition applies.
+      </li>
+      <li>
+        <strong>Deploy.</strong> Push to <code>main</code>. The workflow builds and publishes.</li>
+    </ol>
+
+    <div class="box note">
+      <p>
+        <strong>Do not skip this:</strong> the site is allowed to be free to run, but the budget you
+        show a funder must include your hours. A zero-labor budget reads as "this will be abandoned,"
+        and it is the most common reason a tiny civic project gets declined.
+      </p>
+    </div>
+
+    <!-- PHASE 1 -->
+    <h2 class="phase">Phase 1: weeks 1 to 8, earn the numbers</h2>
+    <p>
+      Do not pitch until you have roughly two months of data. A live site with real usage is the
+      strongest paragraph in any proposal; a built site with no users is a hard sell to a stranger.
+    </p>
+
+    <h3>Get the site in front of people</h3>
+    <ul>
+      <li>
+        Print the partner one-pager (<code>partners.html</code>) and a simple card with a QR code to
+        the site. Hand cards to 10 pantries, libraries, senior centers, and FQHC waiting rooms.
+      </li>
+      <li>
+        Ask three community organizations to link to it from their food access page. Offer to write the
+        two sentences for them.
+      </li>
+      <li>
+        Post once in each borough's subreddit and in mutual aid groups, framed as a tool, not a
+        fundraiser. Answer questions in the thread.
+      </li>
+      <li>
+        Add a one-line "last verified" date to the site footer (for example "List checked against the
+        state list on November 8, 2026"). It is the cheapest possible signal that maintenance is real.
+      </li>
+    </ul>
+
+    <h3>Measure these, weekly, in one spreadsheet</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>Where it comes from</th>
+          <th>Why a funder cares</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Visits and unique visitors</td>
+          <td>GoatCounter dashboard</td>
+          <td>Reach, the first number anyone asks for.</td>
+        </tr>
+        <tr>
+          <td>Address and location lookups</td>
+          <td><code>nearby-lookup</code>, <code>use-my-location</code> events</td>
+          <td>Proof that people are actually searching, not just landing.</td>
+        </tr>
+        <tr>
+          <td>Directions and call clicks</td>
+          <td><code>directions</code>, <code>call</code> events</td>
+          <td>Intent to go. This is the closest thing to a meal outcome.</td>
+        </tr>
+        <tr>
+          <td>Top boroughs and ZIP codes</td>
+          <td>GoatCounter country/city and path data</td>
+          <td>Lets a borough sponsor see their own district in the numbers.</td>
+        </tr>
+        <tr>
+          <td>Share of mobile visits</td>
+          <td>GoatCounter</td>
+          <td>Justifies the no-app, low-bandwidth design.</td>
+        </tr>
+        <tr>
+          <td>Emails and requests received</td>
+          <td>Your inbox</td>
+          <td>Qualitative evidence that institutions want this.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Translation is the highest-value thing you can do next</h3>
+    <p>
+      The audience is heavily Spanish-speaking, and the site is English-only. A native-speaker review
+      of the interface and the four program explanations is both a real user benefit and a line item
+      funders understand. Do not machine-translate the legal pages and call it done; have a person
+      read them.
+    </p>
+
+    <!-- PHASE 2 -->
+    <h2 class="phase">Phase 2: weeks 8 to 12, the ask</h2>
+
+    <h3>Who to approach, in order</h3>
+    <ol>
+      <li>
+        <strong>FQHCs and hospital community benefit offices.</strong> In New York, nonprofit
+        hospitals must document community health spending, and food insecurity is a standing priority
+        in many of their community health needs assessments. Your tool is a cheap, reportable line in
+        that document. Ask for the community benefit or population health office, not marketing.
+      </li>
+      <li>
+        <strong>Anti-hunger and food access nonprofits.</strong> The ones already doing SNAP outreach.
+        They can pay a small sponsorship, or, more often, they can carry you as a subawardee on a grant
+        they are already writing. Ask which proposals are open.
+      </li>
+      <li>
+        <strong>NYC Council discretionary funding.</strong> Find the council member for the district
+        with the most listings and the most visits, and ask about a member item. Small civic projects
+        are funded this way, but the process is annual and usually needs an organization to receive the
+        money.
+      </li>
+      <li>
+        <strong>Borough presidents and community foundations.</strong> Smaller amounts, less process,
+        good for a first check.
+      </li>
+      <li>
+        <strong>Medicaid managed care plans.</strong> Real budgets, but state marketing review slows
+        everything down. Approach only if you have patience and a named contact.
+      </li>
+    </ol>
+
+    <h3>What a good ask contains</h3>
+    <ul>
+      <li>One page, one number, one deliverable, one reporting promise.</li>
+      <li>
+        A specific use of funds: "one verification pass over 235 listings," not "support the site."
+      </li>
+      <li>Two months of real numbers, and the sentence "here is what we would do with your money."</li>
+      <li>A link to the sponsorship policy, so they can see you will not sell placement.</li>
+      <li>A start date and a renewal date, so it is a decision they can make once a year.</li>
+    </ul>
+
+    <h3>Opening email, 150 words</h3>
+    <div class="mail">
+      <p>Subject: Free EBT restaurant map, and a small ask</p>
+      <p>
+        Hi [Name] — I run Snap Map NYC (snapmapnyc.com), a free map of the 235 New York City
+        restaurants that accept EBT through the Restaurant Meals Program. It needs no app, no account,
+        and sets no cookies. In the last [N] weeks, [X] people used it to search near an address, and
+        [Y] clicked through for directions.
+      </p>
+      <p>
+        I am looking for [$500] from [Organization] to cover [a full re-verification of every listing
+        against the current state list] this year. Sponsors are named on the site, never in the
+        listings, and money does not affect ranking or inclusion — the policy is here: [link].
+      </p>
+      <p>
+        Would a 15-minute call in the next two weeks make sense? Happy to send the one-page summary
+        first.
+      </p>
+      <p>— [Name], [phone]</p>
+    </div>
+
+    <h3>Follow-up rhythm</h3>
+    <p>
+      Day 5: forward the same note with the one-pager attached. Day 12: one line, "closing the loop on
+      this." Then stop and put them on a quarterly update list. Most first-time civic sponsorships are
+      won on the second or third contact, not the first.
+    </p>
+
+    <div class="box note">
+      <p>
+        <strong>Pricing guardrail:</strong> $500 is a fine first number because it buys a concrete
+        deliverable. Do not go below what the work costs you in hours. If an organization cannot pay,
+        ask for in-kind help instead: data sharing, translation review, printing, or a desk at their
+        outreach events.
+      </p>
+    </div>
+
+    <!-- PHASE 3 -->
+    <h2 class="phase">Phase 3: money mechanics</h2>
+
+    <h3>Entity</h3>
+    <p>
+      Stay a sole proprietor for now. You can invoice as an individual with a W-9. A New York LLC
+      requires newspaper publication for six weeks, which commonly runs into four figures in the city,
+      and that is a bad first expense for a project earning a few thousand a year. Revisit the LLC when
+      you sign a contract with real liability or start paying others.
+    </p>
+    <p>
+      If a funder requires 501(c)(3) status, use a fiscal sponsor rather than incorporating. They
+      receive the grant, take 5 to 10 percent, and you keep your independence. Ask a community
+      organization you already work with, or a fiscal sponsorship intermediary.
+    </p>
+
+    <h3>Paperwork</h3>
+    <ul>
+      <li>Get an EIN (free, online, minutes). Use it instead of your Social Security number on W-9s.</li>
+      <li>Open a separate checking account for the project. Never mix it with personal spending.</li>
+      <li>
+        Invoice fields: your name and address, EIN, invoice number, date, "Sponsorship of Snap Map NYC,
+        [period]", amount, payment terms (net 30), and a line naming the deliverable.
+      </li>
+      <li>Track hours from day one. It is your budget justification next year.</li>
+      <li>
+        Set aside 25 to 30 percent of every check for taxes, and pay quarterly estimated taxes. A
+        sponsorship is taxable self-employment income; it is not a gift.
+      </li>
+      <li>
+        Keep receipts for domain, printing, hosting, and any contractor. They are deductible against
+        the income.
+      </li>
+    </ul>
+
+    <h3>What to put in a one-page sponsorship agreement</h3>
+    <ul>
+      <li>Scope and deliverable, with dates.</li>
+      <li>Amount, payment schedule, and what happens if the project stops (refund the unearned part).</li>
+      <li>How the sponsor is credited, and the sentence that credit does not imply endorsement.</li>
+      <li>Editorial independence: no approval over content, listings, or ranking.</li>
+      <li>Data: aggregate reporting only, no visitor-level data because none exists.</li>
+      <li>Term, renewal, and either side's ability to end it with 30 days' notice.</li>
+    </ul>
+
+    <!-- PHASE 4 -->
+    <h2 class="phase">Phase 4: expansion, but only in this order</h2>
+    <p>
+      More public benefit data is a good idea because funders fund benefits access, not restaurant
+      maps. It is also where small civic projects die, because stale hours destroy trust faster than a
+      missing feature. The rule for every new layer: a maintained source, a visible verification date,
+      and a named owner. If you cannot get all three, link out instead of embedding it.
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 26%">Layer</th>
+          <th style="width: 20%">Source</th>
+          <th>Why now or later</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>EBT farmers markets and Health Bucks</td>
+          <td>GrowNYC, NYC Open Data</td>
+          <td>High value, seasonal but predictable. Do this first.</td>
+        </tr>
+        <tr>
+          <td>SNAP enrollment help nearby</td>
+          <td>Public CBO lists</td>
+          <td>Static, low churn, and it turns the site into a benefits tool.</td>
+        </tr>
+        <tr>
+          <td>Food pantries and free meals</td>
+          <td>Food Help NYC, HRA</td>
+          <td>Only with a maintained feed and verification dates. Hours change weekly.</td>
+        </tr>
+        <tr>
+          <td>EBT museum and culture discounts</td>
+          <td>Individual institutions</td>
+          <td>Different category. Interesting, but it drifts from the food mission.</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      Do not add reviews, wait times, prices, or crowdsourced edits. They need moderation you do not
+      have, and they invite the one thing you cannot afford: confidently wrong information about food.
+    </p>
+
+    <!-- PHASE 5 -->
+    <h2 class="phase">Phase 5: the path that actually pays</h2>
+    <p>
+      Sponsorship is coffee money. The same codebase, packaged, is worth several times more per sale.
+      The hand-drawn map, the no-API-key approach, the stateless search, and now the legal templates and
+      the partner one-pager are a reusable kit for any city or county with a Restaurant Meals Program
+      or a food access map.
+    </p>
+    <ul>
+      <li>
+        <strong>Who buys:</strong> food policy councils, anti-hunger coalitions, cooperative extension
+        programs, county health departments, and state agencies that need a contractor.
+      </li>
+      <li>
+        <strong>What you sell:</strong> a branded instance with their data, their borough or county
+        shapes, deployment, and a handover. Keep the NYC site yours and independent.
+      </li>
+      <li>
+        <strong>Price:</strong> $2,000 to $10,000 per instance depending on data work, or $75 to $150 an
+        hour. Say the number plainly; civic buyers expect a budget, not a donation request.
+      </li>
+      <li>
+        <strong>Disclose conflicts:</strong> if a sponsor also becomes a client, say so on the site.
+      </li>
+    </ul>
+
+    <!-- GUARDRAILS -->
+    <h2>Guardrails that protect the whole thing</h2>
+    <ul>
+      <li>
+        <strong>Never imply government endorsement.</strong> No USDA, SNAP, OTDA, HRA, or City marks.
+        Keep the non-affiliation sentence in the footer on every page, including the new ones.
+      </li>
+      <li>
+        <strong>No pay-for-placement, ever.</strong> One exception would end your credibility with
+        every funder you have.
+      </li>
+      <li>
+        <strong>No user data, no ads, no affiliate links.</strong> Especially not to delivery services
+        on a SNAP audience.
+      </li>
+      <li>
+        <strong>Respect the Nominatim policy.</strong> One request per visitor action, never on
+        keystrokes, identifiable Referer and User-Agent, attribution in the footer. Bulk geocoding goes
+        through the Census geocoder at build time, as you already do.
+      </li>
+      <li>
+        <strong>Show your freshness.</strong> A verification date, and an easy way to report a wrong
+        listing. Wrong hours are the fastest way to lose a user forever.
+      </li>
+      <li>
+        <strong>Audit accessibility before pitching institutions.</strong> Hospitals and city agencies
+        ask. Your statement already sets the target honestly; get an independent check when you can
+        afford one.
+      </li>
+    </ul>
+
+    <!-- CHECKLIST -->
+    <h2>90-day checklist</h2>
+    <div class="two-col">
+      <div>
+        <h3>Days 1 to 7</h3>
+        <ul class="checklist">
+          <li>Contact address fixed</li>
+          <li>Legal pages read and corrected</li>
+          <li>GoatCounter account and site code</li>
+          <li>Analytics verified, own IP excluded</li>
+          <li>Live footer links checked</li>
+          <li>Deployed to production</li>
+        </ul>
+        <h3>Days 8 to 30</h3>
+        <ul class="checklist">
+          <li>One hour of legal review booked</li>
+          <li>Source list terms confirmed</li>
+          <li>100 QR cards printed</li>
+          <li>10 sites visited or mailed</li>
+          <li>3 organizations asked to link</li>
+          <li>Weekly metrics sheet started</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Days 31 to 60</h3>
+        <ul class="checklist">
+          <li>Spanish review of the interface quoted</li>
+          <li>Full re-verification pass done</li>
+          <li>"Last verified" line added</li>
+          <li>5 target organizations identified</li>
+          <li>Partner one-pager sent to each</li>
+        </ul>
+        <h3>Days 61 to 90</h3>
+        <ul class="checklist">
+          <li>15-minute calls held</li>
+          <li>First sponsorship invoice sent</li>
+          <li>W-9 and separate account ready</li>
+          <li>Quarterly tax set-aside started</li>
+          <li>Decision on farmers market layer</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- APPENDIX -->
+    <h2>Appendix: the numbers to keep in front of you</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Line</th>
+          <th>Year one, low</th>
+          <th>Year one, realistic</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Domain and hosting</td><td>$15</td><td>$15</td></tr>
+        <tr><td>Analytics</td><td>$0</td><td>$0</td></tr>
+        <tr><td>Legal review (one hour)</td><td>$0</td><td>$600</td></tr>
+        <tr><td>Printing (cards, one-pagers)</td><td>$50</td><td>$250</td></tr>
+        <tr><td>Spanish review and translation</td><td>$0</td><td>$700</td></tr>
+        <tr><td>Verification labor (your hours)</td><td>$600</td><td>$2,400</td></tr>
+        <tr><td>Accessibility audit</td><td>$0</td><td>$1,500</td></tr>
+        <tr><td><strong>Total to raise</strong></td><td><strong>~$665</strong></td><td><strong>~$5,465</strong></td></tr>
+      </tbody>
+    </table>
+    <p class="small">
+      The low column is the honest minimum to keep the site correct for a year. If you raise less than
+      that, the list starts to rot, and the product stops being worth sponsoring.
+    </p>
+
+    <div class="box note">
+      <p>
+        <strong>The one-sentence version.</strong> Ship it, measure it for two months, price your
+        hours, ask institutions for a specific deliverable, and never let money touch the ranking.
+      </p>
+    </div>
+
+    <footer>
+      Prepared November 8, 2026. General information, not legal or tax advice. Have an attorney review
+      the terms and privacy notice before relying on them.
+    </footer>
+  </body>
+</html>
