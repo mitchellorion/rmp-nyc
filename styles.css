@@ -154,7 +154,7 @@ button, input, select {
 .ad-strip {
   display: flex;
   justify-content: center;
-  padding: 0.7rem 1.5rem;
+  padding: 0.5rem 1.5rem;
 }
 
 .ad-slot {
@@ -188,10 +188,11 @@ button, input, select {
 }
 
 /* Live creative slot: two banner frames crossfading in place. Sized to
-   the creatives' 4:1 aspect ratio (1188x297). */
+   the creatives' 4:1 aspect ratio (1188x297). Kept to 480px so the advert
+   stays a strip rather than dominating the page. */
 .ad-creative {
   position: relative;
-  width: min(728px, 100%);
+  width: min(480px, 100%);
   aspect-ratio: 1188 / 297;
   padding: 0;
   overflow: hidden;

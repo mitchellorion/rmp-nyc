@@ -164,6 +164,11 @@ const map = new maplibregl.Map({
 
 map.dragRotate.disable();
 map.touchZoomRotate.disableRotation();
+// Navigation is click and pull: click a spot to pull it to the center of
+// the map, or press and drag (pull) to pan. Mouse-wheel scrolling no longer
+// zooms; the on-map +/- buttons handle zooming instead.
+map.scrollZoom.disable();
+map.addControl(new maplibregl.NavigationControl({ showCompass: false }), "top-right");
 
 // If the visitor pans or zooms before their location resolves, do not yank
 // the map away from them when the initial fix arrives.
@@ -173,6 +178,20 @@ map.on("dragstart", () => {
 });
 map.on("wheel", () => {
   userInteractedWithMap = true;
+});
+map.on("click", (event) => {
+  userInteractedWithMap = true;
+
+  // Pull the clicked point to the center of the map. Ignore clicks on
+  // markers and open popups so selecting a restaurant does not recenter.
+  const target = event.originalEvent && event.originalEvent.target;
+  if (
+    target instanceof Element &&
+    target.closest(".restaurant-marker, .maplibregl-popup")
+  ) {
+    return;
+  }
+  map.easeTo({ center: event.lngLat, duration: 600 });
 });
 
 // The AWS Standard style was authored for engines that report multipolygon
@@ -469,18 +488,17 @@ function tryInitialUserLocation() {
 function getFilteredRestaurants() {
   const borough = boroughSelect.value;
   const searchValue = searchInput.value.trim().toLowerCase();
-  const bounds = map.getBounds();
 
+  // The list is independent of the map: it shows every restaurant matching
+  // the search and borough filters, regardless of the map viewport.
   return activeRestaurants.filter((restaurant) => {
     if (!restaurant.point) {
       return false;
     }
-    // Only restaurants currently visible on the map are listed.
-    const inView = bounds.contains([restaurant.point.lon, restaurant.point.lat]);
     const matchesBorough = restaurant.borough === borough || borough === "All";
     const text = `${restaurant.name} ${restaurant.address} ${restaurant.city}`.toLowerCase();
     const matchesSearch = !searchValue || text.includes(searchValue);
-    return inView && matchesBorough && matchesSearch;
+    return matchesBorough && matchesSearch;
   });
 }
 
@@ -491,7 +509,7 @@ function renderRestaurantList(items) {
     const hasActiveFilter = Boolean(searchInput.value.trim()) || boroughSelect.value !== "All";
     listEl.innerHTML = hasActiveFilter
       ? '<p class="empty-state">No restaurants match your search.</p>'
-      : '<p class="empty-state">No participating restaurants in this area.<br />Pan the map to find more.</p>';
+      : '<p class="empty-state">No participating restaurants available yet.</p>';
     countEl.textContent = "0 restaurants";
     return;
   }
@@ -533,22 +551,18 @@ function refreshList() {
 searchInput.addEventListener("input", refreshList);
 boroughSelect.addEventListener("change", refreshList);
 
-// Pan or zoom the map and the list follows: only restaurants inside the
-// current viewport are rendered as markers and shown in the panel.
+// Panning or zooming the map only refreshes which markers are on the map;
+// the restaurant list no longer follows the map viewport.
 map.on("moveend", () => {
   refreshMarkers();
-  refreshList();
 });
 
+// Reset clears the search and borough filters and refreshes the list. The
+// map is left where the visitor put it; the two elements are independent.
 resetButton.addEventListener("click", () => {
   searchInput.value = "";
   boroughSelect.value = "All";
   refreshList();
-  map.flyTo({
-    center: NYC_CENTER,
-    zoom: 11,
-    duration: 1300,
-  });
 });
 
 async function geocodeWithConcurrency(items, concurrency) {
