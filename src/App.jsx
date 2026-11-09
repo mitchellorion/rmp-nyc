@@ -21,6 +21,7 @@ export default function App() {
   const { t } = useI18n();
   const initial = useRef(readUrl()).current;
   const [borough, setBorough] = useState(initial.borough);
+  const [category, setCategory] = useState("rmp");
   const [query, setQuery] = useState("");
   const [addressText, setAddressText] = useState(initial.near);
   const [place, setPlace] = useState(null); // { lat, lon, label } once an address is found
@@ -121,12 +122,19 @@ export default function App() {
   const reset = () => {
     clearAddress();
     setBorough("All");
+    setCategory("rmp");
     setQuery("");
     setSelectedId(null);
   };
 
   const chooseBorough = (name) => {
     setBorough(name);
+    setSelectedId(null);
+    setShown(PAGE);
+  };
+
+  const chooseCategory = (name) => {
+    setCategory(name);
     setSelectedId(null);
     setShown(PAGE);
   };
@@ -143,7 +151,7 @@ export default function App() {
     return { items: list, distances: map };
   }, [borough, query, place]);
 
-  useEffect(() => setShown(PAGE), [borough, query, place]);
+  useEffect(() => setShown(PAGE), [borough, query, place, category]);
 
   const selected = items.find((r) => r.id === selectedId) ?? null;
 
@@ -175,7 +183,7 @@ export default function App() {
     if (index >= shown) setShown(Math.ceil((index + 1) / PAGE) * PAGE);
   };
 
-  const canReset = borough !== "All" || !!query || !!place || !!addressText;
+  const canReset = borough !== "All" || !!query || !!place || !!addressText || category !== "rmp";
 
   return (
     <div id="top" tabIndex={-1} className="min-h-screen bg-paper font-body text-ink outline-none">
@@ -186,6 +194,8 @@ export default function App() {
             <Finder
               borough={borough}
               onBorough={chooseBorough}
+              category={category}
+              onCategory={chooseCategory}
               counts={COUNTS}
               total={restaurants.length}
               addressText={addressText}
@@ -205,7 +215,7 @@ export default function App() {
 
           <div
             ref={mapRef}
-            className="h-[62vh] min-h-[22rem] overflow-hidden rounded-[1.75rem] border-2 border-ink bg-water shadow-block lg:sticky lg:top-24 lg:self-start lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:h-[calc(100vh-7.5rem)] lg:min-h-[32rem]"
+            className="h-[62vh] min-h-[22rem] overflow-hidden rounded-[1.75rem] border-2 border-ink bg-water shadow-block lg:sticky lg:top-24 lg:self-start lg:col-start-2 lg:row-span-2 lg:row-start-1"
           >
             <MapView
               items={items}
