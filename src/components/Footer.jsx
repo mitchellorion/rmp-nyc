@@ -21,7 +21,7 @@ export function Footer() {
           <a
             href="#top"
             onClick={jumpTo}
-            className={twMerge("mt-6 inline-flex min-h-11 items-center gap-2 rounded-xl border-2 border-paper px-4 font-display text-sm font-bold text-paper hover:bg-paper hover:text-ink", focusRing, "focus-visible:ring-offset-ink")}
+            className={twMerge("mt-6 inline-flex min-h-11 items-center gap-2 rounded-xl border-2 border-paper px-4 font-display text-sm font-bold text-paper hover:bg-paper hover:text-ink", focusRing)}
           >
             <ArrowUp className="size-4" aria-hidden="true" />
             {t("footer.top")}
@@ -31,6 +31,17 @@ export function Footer() {
           <p>{t("footer.note")}</p>
           <p>{t("footer.privacy")}</p>
           <p className="text-sm">{t("footer.credits")}</p>
+          <p className="text-sm">
+            Built by{" "}
+            <a
+              href="https://ctrlaltorion.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={twMerge("underline underline-offset-4 hover:text-accent", focusRing)}
+            >
+              CtrlAltOrion
+            </a>
+          </p>
         </div>
       </div>
       <nav aria-label={t("footer.legalLabel")} className="mx-auto max-w-[90rem] px-4 pb-10 sm:px-6">
