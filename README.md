@@ -4,7 +4,7 @@ A playful illustrated map of New York City restaurants that accept EBT through
 the Restaurant Meals Program. Live at [snapmapnyc.com](https://snapmapnyc.com)
 (GitHub Pages).
 
-- 235 restaurants, pre-geocoded, one colour per borough
+- 333 restaurants, pre-geocoded, one colour per borough
 - Hand-drawn SVG city map — no map library, no API keys
 - Filter by borough, sort by distance from an address or ZIP (OpenStreetMap
   Nominatim, one request when the visitor asks for it)
@@ -51,7 +51,7 @@ counted, because the script is not loaded for them. The privacy notice describes
 npm run dev        # development server
 npm run build      # preview build (dist-preview/)
 npm run build:prod # production build (dist/)
-node --test        # data tests
+npm test           # data tests (node --test)
 ```
 
 ## Deployment

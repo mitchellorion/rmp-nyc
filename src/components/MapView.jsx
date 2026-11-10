@@ -4,7 +4,7 @@ import { twMerge } from "tailwind-merge";
 import { BOROUGH_SHAPES } from "@/data/nyc-map.js";
 import { useI18n } from "@/i18n/index.jsx";
 import { BOROUGHS, BOROUGH_VAR, foodEmoji, project } from "@/lib/geo.js";
-import { directionsUrl } from "./Results.jsx";
+import { directionsUrl, UnverifiedBadge } from "./Results.jsx";
 import { focusRing } from "./ui.jsx";
 
 const MIN_SCALE = 0.35;
@@ -22,13 +22,15 @@ function fitView(bbox, size, maxScale = MAX_SCALE) {
 }
 
 const Pin = memo(function Pin({ r, x, y, visual, selected, tabbable, onSelect }) {
+  const { t } = useI18n();
   const emoji = visual >= 24 ? foodEmoji(r.name) : null;
+  const unverified = r.verification === "unverified" ? `. ${t("results.unverified")}` : "";
   return (
     <button
       type="button"
       onClick={() => onSelect(r.id)}
       tabIndex={tabbable ? 0 : -1}
-      aria-label={`${r.name}, ${r.address}`}
+      aria-label={`${r.name}, ${r.address}${unverified}`}
       aria-pressed={selected}
       className={twMerge("group absolute left-0 top-0 grid min-h-6 min-w-6 place-items-center rounded-full", focusRing, selected ? "z-20" : "z-10 hover:z-20")}
       style={{ transform: `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%)`, width: Math.max(24, visual), height: Math.max(24, visual) }}
@@ -200,6 +202,11 @@ export function MapView({ items, selectedId, onSelect, user, focus, borough, onB
           <p className="mt-0.5 text-sm leading-snug text-ink">
             {selected.r.address}, {selected.r.borough}
           </p>
+          {selected.r.verification === "unverified" && (
+            <p className="mt-1.5">
+              <UnverifiedBadge />
+            </p>
+          )}
           <a
             href={directionsUrl(selected.r)}
             target="_blank"

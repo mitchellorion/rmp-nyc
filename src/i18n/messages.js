@@ -40,6 +40,7 @@ export default {
     count: { one: "{count} spot", other: "{count} spots" },
     inBorough: "in {borough}",
     nearest: "Closest to you",
+    unverified: "Unverified, call ahead",
     away: "{miles} mi away",
     showMap: "Show on map",
     onMap: "Showing on map",

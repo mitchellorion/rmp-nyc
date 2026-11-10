@@ -53,7 +53,7 @@ const FOODS = [
   [/pizz/i, "🍕"],
   [/taco|tamale|mexican|qdoba|sabor|latino|mofongo|lechon/i, "🌮"],
   [/burger|mcdonald|sonic|checkers/i, "🍔"],
-  [/chicken|popeye|wing|kentucky|bojangles|jerk|roasted|fried|bbq/i, "🍗"],
+  [/chicken|pollo|popeye|wing|kentucky|kfc|bojangles|jerk|roasted|fried|bbq/i, "🍗"],
   [/crab|seafood|fish|ocean|sea and sky|shrimp/i, "🦀"],
   [/donut|dunkin|bakery|crepe|toast|cafe|café|coffee|tea|chai/i, "🍩"],
   [/noodle|dumpling|dim sum|chinese|wok|yuan|zai bing|duck|chow|kitchen|uncle ng|ng's|hua|cuihua|lins|happy cuisine|green garden|roseli|wong|dagu/i, "🥡"],

@@ -10,6 +10,15 @@ const linkClass = twMerge(
   focusRing,
 );
 
+export function UnverifiedBadge() {
+  const { t } = useI18n();
+  return (
+    <span className="inline-block max-w-full rounded-full border-2 border-ink bg-paper px-2.5 py-0.5 text-center font-display text-xs font-bold leading-tight text-ink">
+      {t("results.unverified")}
+    </span>
+  );
+}
+
 export function directionsUrl(r) {
   return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(`${r.name}, ${r.address}, ${r.borough}, NY ${r.zip}`)}`;
 }
@@ -51,6 +60,7 @@ function Card({ r, index, selected, distance, isNearest, onShow }) {
             {isNearest && (
               <span className="rounded-full border-2 border-ink bg-pop px-2.5 py-0.5 font-display text-xs font-bold text-on-pop">{t("results.nearest")}</span>
             )}
+            {r.verification === "unverified" && <UnverifiedBadge />}
           </p>
         </div>
       </div>

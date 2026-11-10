@@ -145,7 +145,12 @@ export default function App() {
     let list = restaurants.filter(
       (r) => (borough === "All" || r.borough === borough) && (!needle || `${r.name} ${r.address} ${r.zip}`.toLowerCase().includes(needle)),
     );
-    if (!place) return { items: list, distances: null };
+    // File order is not alphabetical once later rows are appended, so sort here.
+    // Id is the tie-break, which keeps the original rows in their previous order.
+    if (!place) {
+      list = [...list].sort((a, b) => a.name.localeCompare(b.name, "en-US") || a.id - b.id);
+      return { items: list, distances: null };
+    }
     const map = new Map(list.map((r) => [r.id, miles(place.lat, place.lon, r.lat, r.lon)]));
     list = [...list].sort((a, b) => map.get(a.id) - map.get(b.id));
     return { items: list, distances: map };
