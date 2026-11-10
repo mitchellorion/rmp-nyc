@@ -3,7 +3,7 @@
 Factual state of this project, for the assistant's reference: structure, installed packages, active
 patterns. The current state only, never a history. Keep it under 24 KB.
 
-**Snap Map NYC** (snapmapnyc.com): a playful illustrated map of 235 New York City restaurants that
+**Snap Map NYC** (snapmapnyc.com): a playful illustrated map of 333 New York City restaurants that
 take EBT through the Restaurant Meals Program. The left panel has
 a borough drop-down, an address / ZIP box with a "Use my location" button, and a name search. The
 right side is the map. Below the filters is the list of spots, nearest first when an address is set,
@@ -45,13 +45,13 @@ public/privacy.html          # privacy notice (Nominatim, GitHub Pages, GoatCoun
 public/sponsorship.html      # sponsorship + editorial independence policy
 public/accessibility.html    # accessibility statement (WCAG 2.2 AA target)
 public/partners.html         # printable one-pager for partners and funders
-tests/data.test.js           # node --test: every restaurant has a borough and sits inside NYC
+tests/data.test.js           # node --test: required fields, NYC bounds, unique ids, source/verification
 src/
   main.jsx                   # StrictMode > I18nProvider > ErrorBoundary > App
   App.jsx                    # all state (borough, address, place, query, selection), filtering, sorting, map focus
   index.css                  # palette variables, dot and wave backgrounds
   data/
-    restaurants.json         # id, name, address, borough, zip, lat, lon, optional phone, website
+    restaurants.json         # id, name, address, borough, zip, lat, lon, optional phone, website, source, verification
     nyc-map.js               # BOROUGH_SHAPES: simplified outline path "d", label point, bbox per borough
   lib/
     geo.js                   # project(lon, lat) to map units, BOROUGHS, miles(), foodEmoji(name), bbox helpers
@@ -80,11 +80,15 @@ are tab stops only when 25 or fewer are showing; the list is the keyboard route 
 
 `restaurants.json` was geocoded once (US Census batch geocoder, three addresses by hand) and the
 borough of each point was set from NYC borough outlines, so it can differ from the old list for a
-few addresses. To add a restaurant: append an object with `name`, `address`, `borough`, `zip`, `lat`,
-`lon` (and `phone`, `website` if known), keep the list sorted by name and re-number `id` to the
-position (the test checks this), then run `node --test`. Find coordinates for a new address with
-OpenStreetMap search or the Census geocoder. `foodEmoji()` in `geo.js` picks each spot's emoji from
-keywords in its name; extend its list for new kinds of places.
+few addresses. Later USDA-only rows are appended after that block. To add a restaurant: append an
+object with `name`, `address`, `borough`, `zip`, `lat`, `lon` (and `phone`, `website` if known) and
+set `id` to the new list index so existing ids stay put (the test checks `id` equals the index).
+Optional `source` is `USDA` or `NYC HRA`. Optional `verification` is `unverified` or `verified`. A
+row that has not been checked by hand uses `source` `USDA` and `verification` `unverified`; the list
+and the map popup badge it "Unverified, call ahead". The original rows have no source field, because
+the repo only describes them as compiled from publicly published lists. Then run `npm test`. Find
+coordinates for a new address with OpenStreetMap search or the Census geocoder. `foodEmoji()` in
+`geo.js` picks each spot's emoji from keywords in its name; extend its list for new kinds of places.
 
 ## Language
 
@@ -116,7 +120,7 @@ site is set up for one language, so offer to rewrite `messages.js` in the new on
 npm run dev        # development server
 npm run build      # preview output
 npm run build:prod # production output
-node --test        # data tests
+npm test           # data tests (node --test)
 ```
 
 ## Routing & asset paths
